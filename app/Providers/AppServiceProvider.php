@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use Doctrine\DBAL\Types\Type;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Type::addType('enum', 'Doctrine\DBAL\Types\StringType');
+
+        // Replace 'table_name' and 'column_name' with your own table and column names
+        $platform = $this->app->make('db')->getDoctrineConnection()->getDatabasePlatform();
+        $platform->registerDoctrineTypeMapping('enum', 'enum');
     }
 }
