@@ -15,7 +15,7 @@ class MakeColumnNullable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->enum('pref_profile_view',['yes','no'])->nullable()->change();
-            $table->enum('Zodic_sign',['yes','no'])->nullable()->change();
+            $table->enum('pref_Zodic_sign',['yes','no'])->nullable()->change();
             $table->enum('subsc_package',['0','1'])->nullable()->change();
         });
     }
