@@ -17,6 +17,7 @@ class AddMoreColumnsToUsersTable extends Migration
             $table->string('attraction');
             $table->enum('pref_profile_view',['yes','no'])->nullable();
             $table->enum('subsc_package',['0','1']);
+           
         });
     }
 

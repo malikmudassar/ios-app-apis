@@ -24,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Type::addType('enum', 'Doctrine\DBAL\Types\StringType');
-
+        Type::addType('double', 'Doctrine\DBAL\Types\FloatType');
+        
         // Replace 'table_name' and 'column_name' with your own table and column names
         $platform = $this->app->make('db')->getDoctrineConnection()->getDatabasePlatform();
         $platform->registerDoctrineTypeMapping('enum', 'enum');
