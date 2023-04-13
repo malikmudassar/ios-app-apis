@@ -26,6 +26,11 @@ class CreateUsersTable extends Migration
             $table->string('source')->nullable();
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
+            $table->string('attraction');
+            $table->string('device_id');
+            $table->enum('pref_profile_view',['yes','no']);
+            $table->enum('pref_Zodic_sign',['yes','no']);
+            $table->enum('subsc_package',['0','1']);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             
