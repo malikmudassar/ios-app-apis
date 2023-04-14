@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpotController;
+use App\Http\Controllers\SystemProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 });
 
-
+//private apis
 Route::middleware(['tokenAuth'])->group(function () {
     Route::post('/userProfile', [UserController::class, 'userProfile']);
     Route::post('/userProfileImage', [UserController::class, 'userProfileImage']);
     Route::post('/getSpotsWithinRadius', [SpotController::class, 'getSpotsWithinRadius']);
 });
+
+// public apis
+Route::get('/getProfileData', [SystemProfileController::class, 'getProfileData']);
