@@ -1,7 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CountryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.app');
-});
+Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/country', [CountryController::class, 'index']);
+Route::post('/countryTableList', [CountryController::class, 'countryTableList']);
+Route::post('/addEditCountry', [CountryController::class, 'addEditCountry']);
 
 
