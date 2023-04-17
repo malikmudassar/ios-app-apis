@@ -6,10 +6,10 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-10">
-            <h1>Countries</h1>
+            <h1>Religions</h1>
           </div>
           <div class="col-sm-2">
-          <button type="button" class="btn btn-outline-primary btn-block addCountry"><i class="fa fa-plus"></i> Add Country</button>
+          <button type="button" class="btn btn-outline-primary btn-block addReligion"><i class="fa fa-plus"></i> Add Religion</button>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -25,7 +25,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Countries List</h3>
+                <h3 class="card-title">Religions List</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -33,7 +33,7 @@
                   <thead>
                   <tr>
                     <th>Sr.#</th>
-                    <th>Country</th>
+                    <th>Religion</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -55,7 +55,7 @@
   </div> 
 
 <!-- country modal -->
-  <div class="modal fade" id="countryModal">
+  <div class="modal fade" id="religionModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -65,12 +65,12 @@
               </button>
             </div>
             <div class="modal-body">
-            <form name="country-form" id="country-form">
+            <form name="religion-form" id="religion-form">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Country*</label>
-                    <input type="text" class="form-control" id="country" name="country" placeholder="Enter country">
+                    <label for="exampleInputEmail1">Religion*</label>
+                    <input type="text" class="form-control" id="religion" name="religion" placeholder="Enter religion">
                   </div>
-                  <input type="hidden" name="country_id" id="country_id">
+                  <input type="hidden" name="religion_id" id="religion_id">
               
             </div>
             <div class="modal-footer justify-content-between">
@@ -86,7 +86,7 @@
 <!-- country modal end -->
 
 <!-- country modal -->
-<div class="modal fade" id="deleteCountryModal">
+<div class="modal fade" id="deleteReligionModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -97,11 +97,11 @@
             </div>
             <div class="modal-body">
             <strong>Are you sure to delete this record?</strong>
-           <input type="hidden" name="coountry_id" id="coountry_id">
+           <input type="hidden" name="religion_id" id="religion_id">
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary deleteCountryAction">Delete</button>
+              <button type="button" class="btn btn-primary deleteReligionAction">Delete</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -128,7 +128,7 @@ if (typeof (devicesDt) != 'undefined') {
             order: [],
         "tabIndex": -1,
              "ajax": {
-                "url": "/countryTableList",
+                "url": "/religionTableList",
                 "type": "POST",
                 "data": {'uc' : 1 , "_token": "{{ csrf_token() }}"},
                 failure: function (response) {
@@ -139,15 +139,15 @@ if (typeof (devicesDt) != 'undefined') {
             },
             "columns": [
     {
-        "data": "country_id",
+        "data": "religion_id",
         render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
         }
     },
-    { "data": "country" },
+    { "data": "religion" },
     {
         "render": function (data, type, full, meta){
-            return "<a class='btn btn-primary btn-sm editCountry' data-country_id='"+full.country_id+"' data-country='"+full.country+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm deleteCountry' data-country_id='"+full.country_id+"'><i class='fas fa-trash'></i> Delete</a>";
+            return "<a class='btn btn-primary btn-sm editReligion' data-religion_id='"+full.religion_id+"' data-religion='"+full.religion+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm deleteReligion' data-religion_id='"+full.religion_id+"'><i class='fas fa-trash'></i> Delete</a>";
         }
     }, 
 ],
@@ -166,46 +166,46 @@ language: {
 $(document).ready(function(){
  getData(); 
   });
-  $(document).on('click','.addCountry',function(){
-		$("#country_id").val("");
-		$(".modal-title").text("Add Country");
-		$('#countryModal').modal('show');
+  $(document).on('click','.addReligion',function(){
+		$("#religion_id").val("");
+		$(".modal-title").text("Add Religion");
+		$('#religionModal').modal('show');
 	});
-    $(document).on('click','.editCountry',function(){
-		var country_id=$(this).attr("data-country_id");
-        var country=$(this).attr("data-country");
-        $("#country_id").val(country_id);
-        $("#country").val(country);
-		$(".modal-title").text("Edit Country");
-		$('#countryModal').modal('show');
+    $(document).on('click','.editReligion',function(){
+		var religion_id=$(this).attr("data-religion_id");
+        var religion=$(this).attr("data-religion");
+        $("#religion_id").val(religion_id);
+        $("#religion").val(religion);
+		$(".modal-title").text("Edit Religion");
+		$('#religionModal').modal('show');
 	});
-    $(document).on('click','.deleteCountry',function(){
-		var country_id=$(this).attr("data-country_id");
-        $("#country_id").val(country_id);
-		$(".modal-title").text("Delete Country");
-		$('#deleteCountryModal').modal('show');
+    $(document).on('click','.deleteReligion',function(){
+		var religion_id=$(this).attr("data-religion_id");
+        $("#religion_id").val(religion_id);
+		$(".modal-title").text("Delete Religion");
+		$('#deleteReligionModal').modal('show');
 	});
  $(function() {
- $("form[name='country-form']").validate({
+ $("form[name='religion-form']").validate({
     rules: {
-      country: "required",
+        religion: "required",
       },
     messages: {
-        country: "<span style='color:red'>Please enter country</span>"
+        religion: "<span style='color:red'>Please enter religion</span>"
     },
     submitHandler: function(form) {
-     var country_id = $('#country_id').val();
-     var country = $('#country').val();
+     var religion_id = $('#religion_id').val();
+     var religion = $('#religion').val();
      var token = $('#csrf').val();
      var type = 1;
      var form_data = new FormData();
-    form_data.append("country_id", country_id);
-    form_data.append("country", country);
+    form_data.append("religion_id", religion_id);
+    form_data.append("religion", religion);
     form_data.append("_token", token);
     form_data.append("type", type);
     $('.btnBlock').prop('disabled', true);
      $.ajax({
-             url: "/addEditCountry",
+             url: "/addEditReligion",
              type: "POST",
              data: form_data,
              cache: false,
@@ -215,8 +215,8 @@ $(document).ready(function(){
                  var obj = JSON.parse(data);
                  if(obj.sucesss==200)
                  {
-                    $('#countryModal').modal('hide');
-                    $('#country-form').trigger("reset");
+                    $('#religionModal').modal('hide');
+                    $('#religion-form').trigger("reset");
                     toastr.success(obj.message, 'Success',{timeOut: 5000});
                     $('.btnBlock').prop('disabled', false);
                     getData();				
@@ -231,16 +231,16 @@ $(document).ready(function(){
     });
 });
 
-    $(document).on('click','.deleteCountryAction',function(){
-     var country_id = $('#country_id').val();
+    $(document).on('click','.deleteReligionAction',function(){
+     var religion_id = $('#religion_id').val();
      var token = $('#csrf').val();
      var type = 1;
      var form_data = new FormData();
-    form_data.append("country_id", country_id);
+    form_data.append("religion_id", religion_id);
     form_data.append("_token", token);
     form_data.append("type", type);
      $.ajax({
-             url: "/deleteCountryAction",
+             url: "/deleteReligionAction",
              type: "POST",
              data: form_data,
              cache: false,
@@ -250,7 +250,7 @@ $(document).ready(function(){
                  var obj = JSON.parse(data);
                  if(obj.sucesss==200)
                  {
-                    $('#deleteCountryModal').modal('hide');
+                    $('#deleteReligionModal').modal('hide');
                     toastr.success(obj.message, 'Success',{timeOut: 5000});
                     getData();				
                  }

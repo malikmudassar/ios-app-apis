@@ -36,42 +36,62 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="/dashboard" class="nav-link active">
+            <a href="/dashboard" class="nav-link <?= $nav=='dashboard' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
             </a>
-            
           </li>
-
           <li class="nav-item">
-            <a href="/country" class="nav-link">
+            <a href="/country" class="nav-link <?= $nav=='country' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Country
               </p>
             </a>
           </li>
-
           <li class="nav-item">
-            <a href="/language" class="nav-link">
+            <a href="/language" class="nav-link <?= $nav=='language' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Language
               </p>
             </a>
           </li>
-
           <li class="nav-item">
-            <a href="/religion" class="nav-link">
+            <a href="/religion" class="nav-link <?= $nav=='religion' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Religion
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/category" class="nav-link <?= $nav=='category' ? 'active' : '' ?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+              Profile Category
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/question" class="nav-link <?= $nav=='question' ? 'active' : '' ?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+              Category Question
+              </p>
+            </a>
+          </li>
 
+          <li class="nav-item">
+            <a href="/answer" class="nav-link <?= $nav=='answer' ? 'active' : '' ?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+              Category Answer
+              </p>
+            </a>
+          </li>
 
         </ul>
       </nav>

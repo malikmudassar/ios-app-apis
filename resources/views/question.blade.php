@@ -6,10 +6,10 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-10">
-            <h1>Countries</h1>
+            <h1>Questions</h1>
           </div>
           <div class="col-sm-2">
-          <button type="button" class="btn btn-outline-primary btn-block addCountry"><i class="fa fa-plus"></i> Add Country</button>
+          <button type="button" class="btn btn-outline-primary btn-block addQuestion"><i class="fa fa-plus"></i> Add Question</button>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -25,7 +25,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Countries List</h3>
+                <h3 class="card-title">Questions List</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -33,7 +33,10 @@
                   <thead>
                   <tr>
                     <th>Sr.#</th>
-                    <th>Country</th>
+                    <th>Category</th>
+                    <th>Question</th>
+                    <th>How many answers?</th>
+                    <th>Sort Order</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -55,7 +58,7 @@
   </div> 
 
 <!-- country modal -->
-  <div class="modal fade" id="countryModal">
+  <div class="modal fade" id="questionModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -65,13 +68,35 @@
               </button>
             </div>
             <div class="modal-body">
-            <form name="country-form" id="country-form">
+            <form name="question-form" id="question-form">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Country*</label>
-                    <input type="text" class="form-control" id="country" name="country" placeholder="Enter country">
+                    <label for="exampleInputEmail1">Category*</label>
+                    <select class="form-control" id="category_id" name="category_id">
+                        <option value="">Select Category</option>
+                        @if(isset($category))
+                        @foreach($category as $val)
+                        <option value="{{$val->id}}">{{$val->category_name}}</option>
+                        @endforeach
+                        @endif
+                    </select>
                   </div>
-                  <input type="hidden" name="country_id" id="country_id">
-              
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Question*</label>
+                    <textarea type="text" class="form-control" id="question" name="question" placeholder="Enter question"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Upto*</label>
+                    <input type="number" class="form-control" id="upto" name="upto" placeholder="How many answers">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Sort Order*</label>
+                    <input type="number" class="form-control" id="sortOrder" name="sortOrder" placeholder="Enter Sort Order">
+                  </div>
+
+                  <input type="hidden" name="id" id="id">
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -86,7 +111,7 @@
 <!-- country modal end -->
 
 <!-- country modal -->
-<div class="modal fade" id="deleteCountryModal">
+<div class="modal fade" id="deleteQuestionModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -97,11 +122,11 @@
             </div>
             <div class="modal-body">
             <strong>Are you sure to delete this record?</strong>
-           <input type="hidden" name="coountry_id" id="coountry_id">
+           <input type="hidden" name="id" id="id">
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary deleteCountryAction">Delete</button>
+              <button type="button" class="btn btn-primary deleteQuestionAction">Delete</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -128,7 +153,7 @@ if (typeof (devicesDt) != 'undefined') {
             order: [],
         "tabIndex": -1,
              "ajax": {
-                "url": "/countryTableList",
+                "url": "/questionTableList",
                 "type": "POST",
                 "data": {'uc' : 1 , "_token": "{{ csrf_token() }}"},
                 failure: function (response) {
@@ -139,15 +164,18 @@ if (typeof (devicesDt) != 'undefined') {
             },
             "columns": [
     {
-        "data": "country_id",
+        "data": "id",
         render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
         }
     },
-    { "data": "country" },
+    { "data": "category_name" },
+    { "data": "question" },
+    { "data": "upto" },
+    { "data": "sortOrder" },
     {
         "render": function (data, type, full, meta){
-            return "<a class='btn btn-primary btn-sm editCountry' data-country_id='"+full.country_id+"' data-country='"+full.country+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm deleteCountry' data-country_id='"+full.country_id+"'><i class='fas fa-trash'></i> Delete</a>";
+            return "<a class='btn btn-primary btn-sm editQuestion' data-id='"+full.id+"' data-category_id='"+full.category_id+"' data-question='"+full.question+"' data-upto='"+full.upto+"'data-sortOrder='"+full.sortOrder+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm mt-1 deleteQuestion' data-id='"+full.id+"'><i class='fas fa-trash'></i> Delete</a>";
         }
     }, 
 ],
@@ -166,46 +194,68 @@ language: {
 $(document).ready(function(){
  getData(); 
   });
-  $(document).on('click','.addCountry',function(){
-		$("#country_id").val("");
-		$(".modal-title").text("Add Country");
-		$('#countryModal').modal('show');
+  $(document).on('click','.addQuestion',function(){
+		$("#id").val("");
+        $("#category_id").val("");
+        $("#question").val("");
+        $("#upto").val("");
+        $("#sortOrder").val("");
+		$(".modal-title").text("Add Question");
+		$('#questionModal').modal('show');
 	});
-    $(document).on('click','.editCountry',function(){
-		var country_id=$(this).attr("data-country_id");
-        var country=$(this).attr("data-country");
-        $("#country_id").val(country_id);
-        $("#country").val(country);
-		$(".modal-title").text("Edit Country");
-		$('#countryModal').modal('show');
+    $(document).on('click','.editQuestion',function(){
+		var id=$(this).attr("data-id");
+        var category_id=$(this).attr("data-category_id");
+        var question=$(this).attr("data-question");
+        var upto=$(this).attr("data-upto");
+        var sortOrder=$(this).attr("data-sortOrder");
+        $("#id").val(id);
+        $("#category_id").val(category_id);
+        $("#question").val(question);
+        $("#upto").val(upto);
+        $("#sortOrder").val(sortOrder);
+		$(".modal-title").text("Edit Question");
+		$('#questionModal').modal('show');
 	});
-    $(document).on('click','.deleteCountry',function(){
-		var country_id=$(this).attr("data-country_id");
-        $("#country_id").val(country_id);
-		$(".modal-title").text("Delete Country");
-		$('#deleteCountryModal').modal('show');
+    $(document).on('click','.deleteQuestion',function(){
+		var id=$(this).attr("data-id");
+        $("#id").val(id);
+		$(".modal-title").text("Delete Question");
+		$('#deleteQuestionModal').modal('show');
 	});
  $(function() {
- $("form[name='country-form']").validate({
+ $("form[name='question-form']").validate({
     rules: {
-      country: "required",
+        category_id: "required",
+        question: "required",
+        upto: "required",
+        sortOrder: "required",
       },
     messages: {
-        country: "<span style='color:red'>Please enter country</span>"
+        category_id: "<span style='color:red'>Please select category</span>",
+        question: "<span style='color:red'>Please enter question</span>",
+        upto: "<span style='color:red'>Please enter how many answers?</span>",
+        sortOrder: "<span style='color:red'>Please enter sort order</span>"
     },
     submitHandler: function(form) {
-     var country_id = $('#country_id').val();
-     var country = $('#country').val();
+     var id = $('#id').val();
+     var category_id = $('#category_id').val();
+     var question = $('#question').val();
+     var upto = $('#upto').val();
+     var sortOrder = $('#sortOrder').val();
      var token = $('#csrf').val();
      var type = 1;
      var form_data = new FormData();
-    form_data.append("country_id", country_id);
-    form_data.append("country", country);
+    form_data.append("id", id);
+    form_data.append("category_id", category_id);
+    form_data.append("question", question);
+    form_data.append("upto", upto);
+    form_data.append("sortOrder", sortOrder);
     form_data.append("_token", token);
     form_data.append("type", type);
     $('.btnBlock').prop('disabled', true);
      $.ajax({
-             url: "/addEditCountry",
+             url: "/addEditQuestion",
              type: "POST",
              data: form_data,
              cache: false,
@@ -215,8 +265,8 @@ $(document).ready(function(){
                  var obj = JSON.parse(data);
                  if(obj.sucesss==200)
                  {
-                    $('#countryModal').modal('hide');
-                    $('#country-form').trigger("reset");
+                    $('#questionModal').modal('hide');
+                    $('#question-form').trigger("reset");
                     toastr.success(obj.message, 'Success',{timeOut: 5000});
                     $('.btnBlock').prop('disabled', false);
                     getData();				
@@ -231,16 +281,16 @@ $(document).ready(function(){
     });
 });
 
-    $(document).on('click','.deleteCountryAction',function(){
-     var country_id = $('#country_id').val();
+    $(document).on('click','.deleteQuestionAction',function(){
+     var id = $('#id').val();
      var token = $('#csrf').val();
      var type = 1;
      var form_data = new FormData();
-    form_data.append("country_id", country_id);
+    form_data.append("id", id);
     form_data.append("_token", token);
     form_data.append("type", type);
      $.ajax({
-             url: "/deleteCountryAction",
+             url: "/deleteQuestionAction",
              type: "POST",
              data: form_data,
              cache: false,
@@ -250,7 +300,7 @@ $(document).ready(function(){
                  var obj = JSON.parse(data);
                  if(obj.sucesss==200)
                  {
-                    $('#deleteCountryModal').modal('hide');
+                    $('#deleteQuestionModal').modal('hide');
                     toastr.success(obj.message, 'Success',{timeOut: 5000});
                     getData();				
                  }
