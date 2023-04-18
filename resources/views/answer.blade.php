@@ -79,20 +79,20 @@
                         @endif
                     </select>
                   </div>
-
                   <div class="form-group">
                     <label for="exampleInputEmail1">Select Question*</label>
                     <select class="form-control questionData" id="question_id" name="question_id">
-                        
-                        
                     </select>
                   </div>
-
-
                   <div class="form-group">
                     <label for="exampleInputEmail1">Answer*</label>
-                    <textarea type="text" class="form-control" id="answer_statement" name="answer_statement" placeholder="Enter answer"></textarea>
+                    <textarea type="text" class="form-control" id="answer_statement" name="answer_statement[]" placeholder="Enter answer"></textarea>
                   </div>
+
+                  <div class="form-group addMoreFields">
+                  </div>
+                  <button type="button" class="btn btn-sm btn-success add-more"><i class="fa fa-plus"></i>Add More</button>
+
                   <input type="hidden" name="id" id="id">
             </div>
             <div class="modal-footer justify-content-between">
@@ -171,7 +171,7 @@ if (typeof (devicesDt) != 'undefined') {
     { "data": "answer_statement" },
     {
         "render": function (data, type, full, meta){
-            return "<a class='btn btn-primary btn-sm editAnswer' data-id='"+full.id+"' data-category_id='"+full.category_id+"' data-question_id='"+full.question_id+"' data-answer_statement='"+full.answer_statement+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm deleteAnswer' data-id='"+full.id+"'><i class='fas fa-trash'></i> Delete</a>";
+            return "<a class='btn btn-primary btn-sm editAnswer' data-id='"+full.id+"' data-category_id='"+full.category_id+"' data-question_id='"+full.question_id+"' data-answer_statement='"+full.answer_statement+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm mt-1 deleteAnswer' data-id='"+full.id+"'><i class='fas fa-trash'></i> Delete</a>";
         }
     }, 
 ],
@@ -199,7 +199,7 @@ $(document).ready(function(){
 		$('#answerModal').modal('show');
 	});
     $(document).on('click','.editAnswer',function(){
-		var id=$(this).attr("data-id");
+		    var id=$(this).attr("data-id");
         var category_id=$(this).attr("data-category_id");
         var question_id=$(this).attr("data-question_id");
         var answer_statement=$(this).attr("data-answer_statement");
@@ -236,7 +236,7 @@ $(document).ready(function(){
                 }
             });  
         }
-
+    $('.add-more').addClass('d-none');
 		$(".modal-title").text("Edit Answer");
 		$('#answerModal').modal('show');
 	});
@@ -262,10 +262,16 @@ $(document).ready(function(){
      var id = $('#id').val();
      var category_id = $('#category_id').val();
      var question_id = $('#question_id').val();
-     var answer_statement = $('#answer_statement').val();
-     var token = $('#csrf').val();
-     var type = 1;
-     var form_data = new FormData();
+    //nutiple answers
+     var answer_statement = ''; // initialize variable
+     $('textarea[name="answer_statement[]"]').each(function() { // iterate through each Answer field
+        answer_statement += $(this).val() + ','; // concatenate the value with comma separator
+     });
+     answer_statement = answer_statement.slice(0, -1); // remove the last comma
+
+    var token = $('#csrf').val();
+    var type = 1;
+    var form_data = new FormData();
     form_data.append("id", id);
     form_data.append("category_id", category_id);
     form_data.append("question_id", question_id);
@@ -363,7 +369,26 @@ $('#category_id').on('change', function() {
              }
          });  
     }
-    
 });
+
+
+
+
+$(document).ready(function(){
+    var wrapper = $(".addMoreFields"); //Fields wrapper
+    var add_button = $(".add-more"); //Add button ID
+    var remove_button = $(".remove"); //Remove button ID
+    
+    $(add_button).click(function(e){ //on add input button click
+        e.preventDefault();
+        $(wrapper).append('<div><label for="exampleInputEmail1">Answer*</label><textarea type="text" class="form-control" id="answer_statement" name="answer_statement[]" placeholder="Enter answer"></textarea><a href="#" class="remove_field">Remove</a><br></div>'); //add input box
+    });
+    
+    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+        e.preventDefault();
+        $(this).parent('div').remove(); //remove text box
+    })
+});
+
 
 </script>

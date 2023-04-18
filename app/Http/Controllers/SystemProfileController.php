@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\{ProfileCategory,Category_Question,CategoryAnswer};
+use DB;
 class SystemProfileController extends Controller
 {
     public function getProfileData(Request $request)
@@ -11,10 +12,11 @@ class SystemProfileController extends Controller
        foreach($profileCategoryArray as $val)
        {
                 $dataArray[] = array(
-                    "categor_id"=>$val->id,
-                    "category_name"=>$val->category_name,
-                    "page"=>$val->page,
-                    "category_question"=>$this->getCategoryQuestion($val->id),
+                    "id"=>$val->enc_id,
+                    "pageTitle"=>$val->category_name,
+                    "pageIcon"=>null,
+                    "pageNo"=>$val->page,
+                    "question"=>$this->getCategoryQuestion($val->id),
                 );  
         }
             if(!empty($dataArray))
@@ -23,7 +25,10 @@ class SystemProfileController extends Controller
               $data = array(
                 'success' => true,
                 'message' => 'Profile data',
-                'data' => $dataArray,
+                'attractions' => DB::table('attractions')->select('attraction_id','attraction as title')->get(),
+                'purposes' => DB::table('purposes')->select('purpose_id','purpose as title')->get(),
+                'occupations' => DB::table('occupations')->select('occupation_id','occupation as title')->get(),
+                'questions' => $dataArray,
               );
              }
             else
@@ -32,7 +37,7 @@ class SystemProfileController extends Controller
               $data = array(
                 'success' => false,
                 'message' => 'Something went wrong',
-                'data' => [],
+                'questions' => [],
               );
             }
             return response()->json($data,$status);
@@ -46,12 +51,13 @@ class SystemProfileController extends Controller
         {
             foreach ($result as $row)
             {
-                $data [$i]['question_id'] = $row->id;
-                $data [$i]['question'] = $row->question;
-                $data [$i]['hasChield'] = $this->hasChield($row->category_id,$row->question);
-                $data [$i]['upto'] = $row->upto;
+                $data [$i]['id'] = $row->enc_id;
+                $data [$i]['title'] = $row->question;
                 $data [$i]['sortOrder'] = $row->sortOrder;
-                $data [$i]['category_answer'] = $this->getCategoryAnswer($row->id);
+                $data [$i]['pickUpTo'] = $row->upto;
+                $data [$i]['addButton'] = $row->addButton;
+                $data [$i]['subSection'] = $this->hasChield($row->category_id,$row->question);
+                $data [$i]['options'] = $this->getCategoryAnswer($row->id);
                 $i++;
             }
         }
@@ -66,10 +72,10 @@ class SystemProfileController extends Controller
         {
             foreach ($result as $row)
             {
-                $data [$i]['answer_id'] = $row->id;
-                $data [$i]['category_id'] = $row->category_id;
-                $data [$i]['question_id'] = $row->question_id;
-                $data [$i]['answer_statement'] = $row->answer_statement;
+                $data [$i]['id'] = $row->enc_id;
+                // $data [$i]['category_id'] = $row->category_id;
+                // $data [$i]['question_id'] = $row->question_id;
+                $data [$i]['title'] = $row->answer_statement;
                 $i++;
             }
         }
@@ -89,11 +95,13 @@ class SystemProfileController extends Controller
             {
                 foreach ($result as $row)
                 {
-                    $data [$i]['question_id'] = $row->id;
-                    $data [$i]['question'] = $row->question;
-                    $data [$i]['upto'] = $row->upto;
+                    $data [$i]['id'] = $row->enc_id;
+                    $data [$i]['title'] = $row->question;
                     $data [$i]['sortOrder'] = $row->sortOrder;
-                    $data [$i]['category_answer'] = $this->getCategoryAnswer($row->id);
+                    $data [$i]['pickUpTo'] = $row->upto;
+                    $data [$i]['addButton'] = $row->addButton;
+                    $data [$i]['subSection'] = $this->hasChield($row->category_id,$row->question);
+                    $data [$i]['options'] = $this->getCategoryAnswer($row->id);
                     $i++;
                 }
             }

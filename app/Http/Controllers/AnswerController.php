@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\{Answer,Question,Category};
+use DB;
 class AnswerController extends Controller
 {
     public function index(Request $request)
@@ -23,10 +24,6 @@ class AnswerController extends Controller
 
     public function addEditAnswer(Request $request)
     {
-        $data = new Answer;
-        $data->category_id = $request->input('category_id');
-        $data->question_id = $request->input('question_id');
-        $data->answer_statement = $request->input('answer_statement');
         if($request->input('id') >0)
         {
             $update = Answer::where('id',$request->input('id'))->update([
@@ -45,8 +42,18 @@ class AnswerController extends Controller
         }
         else
         {
-            $data->save();
-            if($data->save() > 0){
+            $answer_statement = $request->input('answer_statement');
+            $answer_array = explode(",", $answer_statement);
+            foreach($answer_array as $answer_statement)
+            {
+                $data = Answer::create([
+                    'category_id' => $request->input('category_id'),
+                    'question_id' => $request->input('question_id'),
+                    'answer_statement' => $answer_statement,
+                ]);
+            }
+            if($data)
+            {
                 $arr = array( "sucesss"=>'200' ,'message' => 'Answer successfully added');
             }
             else
@@ -84,5 +91,7 @@ class AnswerController extends Controller
         }
         return json_encode($arr);
         }
+
+
 }
 ?>

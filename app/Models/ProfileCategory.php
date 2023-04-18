@@ -9,6 +9,7 @@ class ProfileCategory extends Model
     protected $table = 'profile_categories';
     protected $fillable = [
         'id',
+        'enc_id',
         'category_name',
         'page',
         'parent_id',

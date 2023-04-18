@@ -10,8 +10,12 @@ class Question extends Model
     public $timestamps = true;
     protected $fillable = [
         'id',
+        'enc_id',
         'category_id',
         'question',
+        'upto',
+        'sortOrder',
+        'addButton',
     ];
 }
 ?>

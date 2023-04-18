@@ -27,6 +27,7 @@ class QuestionController extends Controller
         $data->question = $request->input('question');
         $data->upto = $request->input('upto');
         $data->sortOrder = $request->input('sortOrder');
+        $data->addButton = $request->input('addButton');
         if($request->input('id') >0)
         {
             $update = Question::where('id',$request->input('id'))->update([
@@ -34,6 +35,7 @@ class QuestionController extends Controller
                 'question' => $request->input('question'),
                 'upto' => $request->input('upto'),
                 'sortOrder' => $request->input('sortOrder'),
+                'addButton' => $request->input('addButton'),
             ]);
             if($update)
             {

@@ -37,6 +37,7 @@
                     <th>Question</th>
                     <th>How many answers?</th>
                     <th>Sort Order</th>
+                    <th>Add Button</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -94,6 +95,11 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Sort Order*</label>
                     <input type="number" class="form-control" id="sortOrder" name="sortOrder" placeholder="Enter Sort Order">
+                  </div>
+
+                  <div class="form-check">
+                  <input type="checkbox" class="form-check-input" value="1" name="addButton" id="addButton">
+                  <label class="form-check-label" for="exampleCheck1">Add Button</label>
                   </div>
 
                   <input type="hidden" name="id" id="id">
@@ -174,8 +180,14 @@ if (typeof (devicesDt) != 'undefined') {
     { "data": "upto" },
     { "data": "sortOrder" },
     {
+            "data": "addButton",
+            "render": function(data, type, row) {
+                return data == 1 ? 'Yes' : 'No';
+            }
+    },
+    {
         "render": function (data, type, full, meta){
-            return "<a class='btn btn-primary btn-sm editQuestion' data-id='"+full.id+"' data-category_id='"+full.category_id+"' data-question='"+full.question+"' data-upto='"+full.upto+"'data-sortOrder='"+full.sortOrder+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm mt-1 deleteQuestion' data-id='"+full.id+"'><i class='fas fa-trash'></i> Delete</a>";
+            return "<a class='btn btn-primary btn-sm editQuestion' data-id='"+full.id+"' data-category_id='"+full.category_id+"' data-question='"+full.question+"' data-upto='"+full.upto+"' data-sortOrder='"+full.sortOrder+"' data-addButton='"+full.addButton+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm mt-1 deleteQuestion' data-id='"+full.id+"'><i class='fas fa-trash'></i> Delete</a>";
         }
     }, 
 ],
@@ -200,8 +212,9 @@ $(document).ready(function(){
         $("#question").val("");
         $("#upto").val("");
         $("#sortOrder").val("");
-		$(".modal-title").text("Add Question");
-		$('#questionModal').modal('show');
+        $('#addButton').prop('checked', false);
+        $(".modal-title").text("Add Question");
+        $('#questionModal').modal('show');
 	});
     $(document).on('click','.editQuestion',function(){
 		var id=$(this).attr("data-id");
@@ -209,13 +222,16 @@ $(document).ready(function(){
         var question=$(this).attr("data-question");
         var upto=$(this).attr("data-upto");
         var sortOrder=$(this).attr("data-sortOrder");
+        var addButton=$(this).attr("data-addButton");
         $("#id").val(id);
         $("#category_id").val(category_id);
         $("#question").val(question);
         $("#upto").val(upto);
         $("#sortOrder").val(sortOrder);
-		$(".modal-title").text("Edit Question");
-		$('#questionModal').modal('show');
+        var condition = addButton==1 ? true : false;
+        $('#addButton').prop('checked', condition);
+        $(".modal-title").text("Edit Question");
+        $('#questionModal').modal('show');
 	});
     $(document).on('click','.deleteQuestion',function(){
 		var id=$(this).attr("data-id");
@@ -243,6 +259,15 @@ $(document).ready(function(){
      var question = $('#question').val();
      var upto = $('#upto').val();
      var sortOrder = $('#sortOrder').val();
+     var addButton = $('#addButton').val();
+     if ($('#addButton').prop('checked')) 
+     {
+      addButton =1;
+     } 
+     else 
+     {
+          addButton =0;
+     }
      var token = $('#csrf').val();
      var type = 1;
      var form_data = new FormData();
@@ -251,6 +276,7 @@ $(document).ready(function(){
     form_data.append("question", question);
     form_data.append("upto", upto);
     form_data.append("sortOrder", sortOrder);
+    form_data.append("addButton", addButton);
     form_data.append("_token", token);
     form_data.append("type", type);
     $('.btnBlock').prop('disabled', true);
