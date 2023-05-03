@@ -15,15 +15,28 @@
   <link rel="stylesheet" href="{{ url('/webAssets') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ url('/webAssets') }}/dist/css/adminlte.min.css">
+  <style>
+  /* .loader{
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url('//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Phi_fenomeni.gif/50px-Phi_fenomeni.gif') 
+              50% 50% no-repeat rgb(249,249,249);
+} */
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <input type="hidden" id="csrf" value="{{ csrf_token() }}">
 <div class="wrapper">
     <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    <img src="{{ url('/webAssets') }}/images/loader.gif">
   </div>
 
+  <!-- <div class="loader d-none"></div> -->
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
