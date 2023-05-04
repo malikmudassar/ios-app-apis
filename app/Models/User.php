@@ -20,16 +20,27 @@ class User extends Authenticatable implements JWTSubject
     public $timestamps = true;
     protected $fillable = [
         'fname',
-        'email',
-        'password',
-        'source',
-        'apple_id',
+        'account',
         'age',
         'birth_month',
         'birth_day',
+        'occupation',
+        'purpose',
+        'provider',
+        'lat',
+        'lng',
+        'device_id',
+        'attraction',
+        'pref_profile_view',
+        'subsc_package',
+        'Zodic_sign',
         'height',
         'gender',
         'profile_path',
+        'password',
+        'state',
+        'userQA',
+        
     ];
 
     /**

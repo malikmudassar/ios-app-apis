@@ -172,20 +172,6 @@ public function getUserData()
                 ];
             }
                 $dataArray[] = array(
-                  
-                    // "id"=>$val->id,
-                    // "fname"=>$val->fname,
-                    // "email"=>$val->email,
-                    // "source"=>$val->source,
-                    // "apple_id"=>$val->apple_id,
-                    // "age"=>$val->age,
-                    // "birth_month"=>$val->birth_month,
-                    // "birth_day"=>$val->birth_day,
-                    // "height"=>$val->height,
-                    // "gender"=>$val->gender,
-                    // "profile_path"=>$val->profile_path,
-                    // "preferences"=>$question_answers,
-
                     "id"=>$val->id,
                     "fname"=>$val->fname,
                     "account"=>$val->account,
@@ -229,7 +215,6 @@ public function getUserData()
           }
           return response()->json($data,$status);
 }
-
 
 
 }

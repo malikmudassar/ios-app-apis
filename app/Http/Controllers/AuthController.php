@@ -16,23 +16,14 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if($request->source=='google')
-        {
-            $column = 'email';
-            $value = $request->email;
-
-        }
-        else
-        {
-            $column = 'apple_id';
-            $value = $request->apple_id;
-        }
         $validator = Validator::make($request->all(), 
         [
-            $column => 'required'
+            'provider' => 'required',
+            'account' => 'required'
         ],
         [
-            ''.$column.'.required'  => 'Please enter '.$column.''
+            'provider.required'  => 'Please enter provider',
+            'account.required'  => 'Please enter account',
         ]);
         
         if ($validator->fails()) 
@@ -41,17 +32,17 @@ class AuthController extends Controller
         }
         else
         {
-            $check = User::where($column,$value)->get();
+            $check = User::where('account',$request->account)->get();
             if($check->isEmpty())
             {
                 $user = User::create([
-                    'source' => $request->source,
+                    'provider' => $request->provider,
                     'password' => Hash::make('12345'),
                 ]);
                 $lastInsertedId = $user->id;
-                User::where('id',$lastInsertedId)->update([$column=>$value]);
+                User::where('id',$lastInsertedId)->update(['account'=>$request->account]);
             }
-            $credentials = $request->only($column);
+            $credentials = $request->only('account');
             $credentials['password'] = '12345';
             $token = Auth::attempt($credentials);
             if (!$token) {
