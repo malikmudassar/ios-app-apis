@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\{ProfileCategory,Category_Question,CategoryAnswer};
+use App\Models\{ProfileCategory,Category_Question,CategoryAnswer,Information};
 use DB;
 class SystemProfileController extends Controller
 {
@@ -56,6 +56,7 @@ class SystemProfileController extends Controller
                 $data [$i]['sortOrder'] = $row->sortOrder;
                 $data [$i]['pickUpTo'] = $row->upto;
                 $data [$i]['addButton'] = $row->addButton;
+                $data [$i]['hasInfo'] = $this->hasInfo($row->id);
                 $data [$i]['subSection'] = $this->hasChield($row->category_id,$row->question);
                 $data [$i]['options'] = $this->getCategoryAnswer($row->id);
                 $i++;
@@ -100,6 +101,7 @@ class SystemProfileController extends Controller
                     $data [$i]['sortOrder'] = $row->sortOrder;
                     $data [$i]['pickUpTo'] = $row->upto;
                     $data [$i]['addButton'] = $row->addButton;
+                    $data [$i]['hasInfo'] = $this->hasInfo($row->id);
                     $data [$i]['subSection'] = $this->hasChield($row->category_id,$row->question);
                     $data [$i]['options'] = $this->getCategoryAnswer($row->id);
                     $i++;
@@ -109,6 +111,25 @@ class SystemProfileController extends Controller
         }
         
         
+    }
+
+    public function hasInfo($question_id)
+    {
+        $hasInfo = Information::where('question_id',$question_id)->get();
+        if(isset($hasInfo))
+        {
+            $i=0;
+            if($hasInfo != '' && $hasInfo != null)
+            {
+                foreach ($hasInfo as $row)
+                {
+                    $data [$i]['info_id'] = $row->info_id;
+                    $data [$i]['info_content'] = $row->info_content;
+                    $i++;
+                }
+            }
+            return isset($data) ? $data : null;
+        } 
     }
 
 

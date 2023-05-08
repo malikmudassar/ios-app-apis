@@ -19,11 +19,13 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), 
         [
             'provider' => 'required',
-            'account' => 'required'
+            'account' => 'required',
+            'device_id' => 'required'
         ],
         [
             'provider.required'  => 'Please enter provider',
             'account.required'  => 'Please enter account',
+            'device_id.required'  => 'Please enter device_id',
         ]);
         
         if ($validator->fails()) 
@@ -38,9 +40,14 @@ class AuthController extends Controller
                 $user = User::create([
                     'provider' => $request->provider,
                     'password' => Hash::make('12345'),
+                    'device_id' => $request->device_id,
                 ]);
                 $lastInsertedId = $user->id;
                 User::where('id',$lastInsertedId)->update(['account'=>$request->account]);
+            }
+            else
+            {
+                User::where('account',$request->account)->update(['device_id'=>$request->device_id]);
             }
             $credentials = $request->only('account');
             $credentials['password'] = '12345';
