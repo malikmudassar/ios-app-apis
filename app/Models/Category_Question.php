@@ -13,6 +13,7 @@ class Category_Question extends Model
         'question',
         'upto',
         'sortOrder',
+        'has_info',
     ];
 
     protected $hidden = [

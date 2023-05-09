@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +20,11 @@ use App\Http\Controllers\InformationController;
 |
 */
 
+Route::get('/', [LoginController::class, 'index']);
+Route::post('/adminLogin', [LoginController::class, 'adminLogin']);
+
+Route::middleware(['adminAuth'])->group(function () {
+Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/country', [CountryController::class, 'index']);
 Route::post('/countryTableList', [CountryController::class, 'countryTableList']);
@@ -50,6 +56,7 @@ Route::get('/information', [InformationController::class, 'index']);
 Route::post('/infoTableList', [InformationController::class, 'infoTableList']);
 Route::post('/addEditInfo', [InformationController::class, 'addEditInfo']);
 Route::post('/deleteInfoAction', [InformationController::class, 'deleteInfoAction']);
+});
 
 
 

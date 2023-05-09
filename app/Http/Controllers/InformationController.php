@@ -42,7 +42,11 @@ class InformationController extends Controller
         else
         {
             $data->save();
-            if($data->save() > 0){
+            Category_Question::where('id',$request->input('question_id'))->update([
+                'has_info' => 1,
+            ]);
+            if($data->save() > 0)
+            {
                 $arr = array( "sucesss"=>'200' ,'message' => 'Question information successfully added');
             }
             else

@@ -58,7 +58,7 @@ class CategoryController extends Controller
             $arr = array( "sucesss"=>'200' ,'message' => 'Category successfully deleted'); 
         }
         else
-        { 
+        {
             $arr = array( "sucesss"=>'400' ,'message' => 'Opps error');
         }
         return json_encode($arr);
