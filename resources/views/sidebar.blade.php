@@ -75,20 +75,44 @@
               </p>
             </a>
           </li>
+
+
+
           <li class="nav-item">
-            <a href="/question" class="nav-link <?= $nav=='question' ? 'active' : '' ?>">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
               Category Question
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+            <li class="nav-item">
+            <a href="/question" class="nav-link <?= $nav=='question' ? 'active' : '' ?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+              Questions
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/information" class="nav-link <?= $nav=='information' ? 'active' : '' ?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>Questions Information</p>
+            </a>
+          </li>
+              
+            </ul>
+          </li>
+
+
+          
 
           <li class="nav-item">
             <a href="/answer" class="nav-link <?= $nav=='answer' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
-              Category Answer
+              Category Answers
               </p>
             </a>
           </li>

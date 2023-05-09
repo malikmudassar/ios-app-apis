@@ -7,6 +7,7 @@ use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\InformationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +18,7 @@ use App\Http\Controllers\AnswerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/country', [CountryController::class, 'index']);
 Route::post('/countryTableList', [CountryController::class, 'countryTableList']);
@@ -43,7 +45,11 @@ Route::post('/answerTableList', [AnswerController::class, 'answerTableList']);
 Route::post('/addEditAnswer', [AnswerController::class, 'addEditAnswer']);
 Route::post('/deleteAnswerAction', [AnswerController::class, 'deleteAnswerAction']);
 Route::post('/categoryDropdownFilter', [AnswerController::class, 'categoryDropdownFilter']);
-
 Route::get('/changeID', [AnswerController::class, 'changeID']);
+Route::get('/information', [InformationController::class, 'index']);
+Route::post('/infoTableList', [InformationController::class, 'infoTableList']);
+Route::post('/addEditInfo', [InformationController::class, 'addEditInfo']);
+Route::post('/deleteInfoAction', [InformationController::class, 'deleteInfoAction']);
+
 
 

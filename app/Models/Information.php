@@ -10,6 +10,7 @@ class Information extends Model
     protected $fillable = [
         'info_id',
         'info_content',
+        'question_id',
     ];
 
     protected $hidden = [
