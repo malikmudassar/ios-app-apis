@@ -46,7 +46,7 @@ Route::get('/question', [QuestionController::class, 'index']);
 Route::post('/questionTableList', [QuestionController::class, 'questionTableList']);
 Route::post('/addEditQuestion', [QuestionController::class, 'addEditQuestion']);
 Route::post('/deleteQuestionAction', [QuestionController::class, 'deleteQuestionAction']);
-Route::get('/answer', [AnswerController::class, 'index']);
+Route::get('/answer', [AnswerController::class, 'index'])->name('answer');
 Route::post('/answerTableList', [AnswerController::class, 'answerTableList']);
 Route::post('/addEditAnswer', [AnswerController::class, 'addEditAnswer']);
 Route::post('/deleteAnswerAction', [AnswerController::class, 'deleteAnswerAction']);
