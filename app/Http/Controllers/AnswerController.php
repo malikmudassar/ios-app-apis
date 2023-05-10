@@ -51,6 +51,9 @@ class AnswerController extends Controller
                     'question_id' => $request->input('question_id'),
                     'answer_statement' => $answer_statement,
                 ]);
+                Answer::where('id',$data->id)->update([
+                    'enc_id' => md5($data->id),
+                ]);
             }
             if($data)
             {

@@ -77,7 +77,7 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item <?= ($nav=='question' || $nav=='information') ? 'menu-is-opening menu-open' : '' ?>">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
@@ -85,7 +85,7 @@
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview" style="display: none;">
+            <ul class="nav nav-treeview" style="display: <?= ($nav=='question' || $nav=='information') ? 'block' : 'none' ?>;" >
             <li class="nav-item">
             <a href="/question" class="nav-link <?= $nav=='question' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
@@ -104,11 +104,8 @@
             </ul>
           </li>
 
-
-          
-
           <li class="nav-item">
-            <a href="/answer" class="nav-link <?= $nav=='answer' ? 'active' : '' ?>">
+            <a href="{{ route('answer') }}" class="nav-link <?= $nav=='answer' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
               Category Answers

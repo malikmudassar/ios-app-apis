@@ -39,6 +39,9 @@ class CategoryController extends Controller
         else
         {
             $data->save();
+            Category::where('id',$data->id)->update([
+                'enc_id' => md5($data->id),
+            ]);
             if($data->save() > 0){
                 $arr = array( "sucesss"=>'200' ,'message' => 'Category successfully added');
             }

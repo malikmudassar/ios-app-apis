@@ -30,6 +30,7 @@
 
 <!-- AdminLTE App -->
 <script src="{{ url('/webAssets') }}/dist/js/adminlte.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
 
 </body>
 </html>

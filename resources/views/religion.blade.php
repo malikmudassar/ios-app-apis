@@ -75,7 +75,11 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary btnBlock">Save changes</button>
+
+              <button type="submit" class="btn btn-primary btnBlock">
+              <span class="btn-text">Save changes</span>
+              <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              </button>
             </div>
             </form>
           </div>
@@ -101,7 +105,10 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary deleteReligionAction">Delete</button>
+              <button type="button" class="btn btn-primary btnBlock deleteReligionAction">
+              <span class="btn-text">Delete</span>
+              <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              </button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -122,6 +129,10 @@ if (typeof (devicesDt) != 'undefined') {
  devicesDt.destroy();
  }
  devicesDt = $(".myTable").DataTable({
+  columnDefs: [{  //dataTable warning
+    "defaultContent": "-",
+    "targets": "_all"
+  }],
  paging: true,
             searching: true,
             responsive: true,
@@ -204,6 +215,7 @@ $(document).ready(function(){
     form_data.append("_token", token);
     form_data.append("type", type);
     $('.btnBlock').prop('disabled', true);
+    $('.spinner-border').removeClass('d-none');
      $.ajax({
              url: "/addEditReligion",
              type: "POST",
@@ -225,6 +237,8 @@ $(document).ready(function(){
                  {
                     toastr.success(obj.message, 'Error',{timeOut: 5000});
                  } 
+                   $('.btnBlock').prop('disabled', false);
+                   $('.spinner-border').addClass('d-none');
              }
          });
         }
@@ -239,6 +253,8 @@ $(document).ready(function(){
     form_data.append("religion_id", religion_id);
     form_data.append("_token", token);
     form_data.append("type", type);
+    $('.spinner-border').removeClass('d-none');
+    $('.btnBlock').prop('disabled', true);
      $.ajax({
              url: "/deleteReligionAction",
              type: "POST",
@@ -258,6 +274,8 @@ $(document).ready(function(){
                  {
                     toastr.success(obj.message, 'Error',{timeOut: 5000});
                  } 
+                  $('.spinner-border').addClass('d-none');
+                  $('.btnBlock').prop('disabled', false);
              }
          });
         });

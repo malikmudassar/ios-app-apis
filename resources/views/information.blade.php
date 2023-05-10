@@ -69,7 +69,7 @@
             <form name="info-form" id="info-form">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Info Content*</label>
-                    <input type="text" class="form-control" id="info_content" name="info_content" placeholder="Enter Question Information">
+                    <textarea type="text" class="form-control" id="info_content" name="info_content" placeholder="Enter Question Information"></textarea>
                   </div>
 
                   <div class="form-group">
@@ -86,7 +86,10 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary btnBlock">Save changes</button>
+              <button type="submit" class="btn btn-primary btnBlock">
+              <span class="btn-text">Save changes</span>
+              <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              </button>
             </div>
             </form>
           </div>
@@ -112,7 +115,11 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary deleteInfoAction">Delete</button>
+              <button type="button" class="btn btn-primary btnBlock deleteInfoAction">
+              <span class="btn-text">Delete</span>
+              <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              </button>
+
             </div>
           </div>
           <!-- /.modal-content -->
@@ -122,6 +129,7 @@
 <!-- country modal end -->
 @include('footer')
 <script>
+CKEDITOR.replace('info_content');
 var devicesDt;
 function getData()
 {
@@ -130,6 +138,10 @@ if (typeof (devicesDt) != 'undefined') {
  devicesDt.destroy();
  }
  devicesDt = $(".myTable").DataTable({
+  columnDefs: [{  //dataTable warning
+    "defaultContent": "-",
+    "targets": "_all"
+  }],
  paging: true,
             searching: true,
             responsive: true,
@@ -177,7 +189,7 @@ $(document).ready(function(){
   });
   $(document).on('click','.addInfo',function(){
 		$("#info_id").val("");
-        $("#info_content").val("");
+    CKEDITOR.instances.info_content.setData("");
         $("#question_id").val("");
 		$(".modal-title").text("Add Question Info");
 		$('#infoModal').modal('show');
@@ -187,7 +199,7 @@ $(document).ready(function(){
         var info_content=$(this).attr("data-info_content");
         var question_id=$(this).attr("data-question_id");
         $("#info_id").val(info_id);
-        $("#info_content").val(info_content);
+        CKEDITOR.instances.info_content.setData(info_content);
         $("#question_id").val(question_id);
 		$(".modal-title").text("Edit Question Info");
 		$('#infoModal').modal('show');
@@ -201,16 +213,18 @@ $(document).ready(function(){
  $(function() {
  $("form[name='info-form']").validate({
     rules: {
-        info_content: "required",
         question_id: "required",
       },
     messages: {
-        info_content: "<span style='color:red'>Please enter question information</span>",
-        question_id: "<span style='color:red'>Please select question</span>"
+        question_id: "<span style='color:red'>Please select question</span>",
     },
     submitHandler: function(form) {
      var info_id = $('#info_id').val();
-     var info_content = $('#info_content').val();
+     var info_content = CKEDITOR.instances.info_content.getData();
+     if(info_content=='' || info_content==null)
+     {
+      toastr.error('Please enter question information', 'Error',{timeOut: 5000});return false;
+     }
      var question_id = $('#question_id').val();
      var token = $('#csrf').val();
      var type = 1;
@@ -221,6 +235,7 @@ $(document).ready(function(){
     form_data.append("_token", token);
     form_data.append("type", type);
     $('.btnBlock').prop('disabled', true);
+    $('.spinner-border').removeClass('d-none');
      $.ajax({
              url: "/addEditInfo",
              type: "POST",
@@ -242,6 +257,8 @@ $(document).ready(function(){
                  {
                     toastr.success(obj.message, 'Error',{timeOut: 5000});
                  } 
+                   $('.btnBlock').prop('disabled', false);
+                   $('.spinner-border').addClass('d-none');
              }
          });
         }
@@ -256,6 +273,8 @@ $(document).ready(function(){
     form_data.append("info_id", info_id);
     form_data.append("_token", token);
     form_data.append("type", type);
+    $('.spinner-border').removeClass('d-none');
+    $('.btnBlock').prop('disabled', true);
      $.ajax({
              url: "/deleteInfoAction",
              type: "POST",
@@ -275,6 +294,8 @@ $(document).ready(function(){
                  {
                     toastr.success(obj.message, 'Error',{timeOut: 5000});
                  } 
+                  $('.spinner-border').addClass('d-none');
+                  $('.btnBlock').prop('disabled', false);
              }
          });
         });

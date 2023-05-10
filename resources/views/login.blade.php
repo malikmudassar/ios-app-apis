@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{ url('/webAssets') }}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ url('/webAssets') }}/dist/css/adminlte.min.css">
+  
 </head>
 <body class="hold-transition login-page">
 <input type="hidden" id="csrf" value="{{ csrf_token() }}">
@@ -47,9 +48,12 @@
             
           </div>
           <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block btnBlock">Sign In</button>
-          </div>
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block btnBlock">
+                <span class="btn-text">Sign In</span>
+                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+            </button>
+        </div>
           <!-- /.col -->
         </div>
       </form>
@@ -103,6 +107,7 @@ $(function() {
     form_data.append("_token", token);
     form_data.append("type", type);
     $('.btnBlock').prop('disabled', true);
+    $('.spinner-border').removeClass('d-none');
      $.ajax({
              url: "/adminLogin",
              type: "POST",
@@ -117,14 +122,17 @@ $(function() {
                     $('#login-form').trigger("reset");
                     toastr.success(obj.message, 'Success',{timeOut: 5000});
                     setTimeout(function() {
+                        $('.spinner-border').addClass('d-none');
                     window.location.href = '/dashboard';
                     }, 2000);			
                  }
                  else
                  {
+                    $('.spinner-border').addClass('d-none');
                     toastr.error(obj.message, 'Error',{timeOut: 5000});
                  } 
                     $('.btnBlock').prop('disabled', false);
+                    
              }
          });
         }

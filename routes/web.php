@@ -23,7 +23,7 @@ use App\Http\Controllers\LoginController;
 Route::get('/', [LoginController::class, 'index']);
 Route::post('/adminLogin', [LoginController::class, 'adminLogin']);
 
-Route::middleware(['adminAuth'])->group(function () {
+// Route::middleware(['adminAuth'])->group(function () {
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/country', [CountryController::class, 'index']);
@@ -56,7 +56,7 @@ Route::get('/information', [InformationController::class, 'index']);
 Route::post('/infoTableList', [InformationController::class, 'infoTableList']);
 Route::post('/addEditInfo', [InformationController::class, 'addEditInfo']);
 Route::post('/deleteInfoAction', [InformationController::class, 'deleteInfoAction']);
-});
+// });
 
 
 
