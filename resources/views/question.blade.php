@@ -170,7 +170,7 @@ if (typeof (devicesDt) != 'undefined') {
             order: [],
         "tabIndex": -1,
              "ajax": {
-                "url": "/questionTableList",
+                "url": "{{ route('questionTableList') }}",
                 "type": "POST",
                 "data": {'uc' : 1 , "_token": "{{ csrf_token() }}"},
                 failure: function (response) {
@@ -293,7 +293,7 @@ $(document).ready(function(){
     $('.btnBlock').prop('disabled', true);
     $('.spinner-border').removeClass('d-none');
      $.ajax({
-             url: "/addEditQuestion",
+             url: "{{ route('addEditQuestion') }}",
              type: "POST",
              data: form_data,
              cache: false,
@@ -332,7 +332,7 @@ $(document).ready(function(){
     $('.spinner-border').removeClass('d-none');
     $('.btnBlock').prop('disabled', true);
      $.ajax({
-             url: "/deleteQuestionAction",
+             url: "{{ route('deleteQuestionAction') }}",
              type: "POST",
              data: form_data,
              cache: false,

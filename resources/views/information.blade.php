@@ -148,7 +148,7 @@ if (typeof (devicesDt) != 'undefined') {
             order: [],
         "tabIndex": -1,
              "ajax": {
-                "url": "/infoTableList",
+                "url": "{{ route('infoTableList') }}",
                 "type": "POST",
                 "data": {'uc' : 1 , "_token": "{{ csrf_token() }}"},
                 failure: function (response) {
@@ -237,7 +237,7 @@ $(document).ready(function(){
     $('.btnBlock').prop('disabled', true);
     $('.spinner-border').removeClass('d-none');
      $.ajax({
-             url: "/addEditInfo",
+             url: "{{ route('addEditInfo') }}",
              type: "POST",
              data: form_data,
              cache: false,
@@ -276,7 +276,7 @@ $(document).ready(function(){
     $('.spinner-border').removeClass('d-none');
     $('.btnBlock').prop('disabled', true);
      $.ajax({
-             url: "/deleteInfoAction",
+             url: "{{ route('deleteInfoAction') }}",
              type: "POST",
              data: form_data,
              cache: false,

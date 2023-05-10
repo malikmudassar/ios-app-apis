@@ -21,42 +21,42 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', [LoginController::class, 'index']);
-Route::post('/adminLogin', [LoginController::class, 'adminLogin']);
+Route::post('/adminLogin', [LoginController::class, 'adminLogin'])->name('adminLogin');
 
-// Route::middleware(['adminAuth'])->group(function () {
-Route::get('/logout', [LoginController::class, 'logout']);
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/country', [CountryController::class, 'index']);
-Route::post('/countryTableList', [CountryController::class, 'countryTableList']);
-Route::post('/addEditCountry', [CountryController::class, 'addEditCountry']);
-Route::post('/deleteCountryAction', [CountryController::class, 'deleteCountryAction']);
-Route::get('/language', [LanguageController::class, 'index']);
-Route::post('/languageTableList', [LanguageController::class, 'languageTableList']);
-Route::post('/addEditLanguage', [LanguageController::class, 'addEditLanguage']);
-Route::post('/deleteLanguageAction', [LanguageController::class, 'deleteLanguageAction']);
-Route::get('/religion', [ReligionController::class, 'index']);
-Route::post('/religionTableList', [ReligionController::class, 'religionTableList']);
-Route::post('/addEditReligion', [ReligionController::class, 'addEditReligion']);
-Route::post('/deleteReligionAction', [ReligionController::class, 'deleteReligionAction']);
-Route::get('/category', [CategoryController::class, 'index']);
-Route::post('/categoryTableList', [CategoryController::class, 'categoryTableList']);
-Route::post('/addEditCategory', [CategoryController::class, 'addEditCategory']);
-Route::post('/deleteCategoryAction', [CategoryController::class, 'deleteCategoryAction']);
-Route::get('/question', [QuestionController::class, 'index']);
-Route::post('/questionTableList', [QuestionController::class, 'questionTableList']);
-Route::post('/addEditQuestion', [QuestionController::class, 'addEditQuestion']);
-Route::post('/deleteQuestionAction', [QuestionController::class, 'deleteQuestionAction']);
+Route::middleware(['adminAuth'])->group(function () {
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/country', [CountryController::class, 'index'])->name('country');
+Route::post('/countryTableList', [CountryController::class, 'countryTableList'])->name('countryTableList');
+Route::post('/addEditCountry', [CountryController::class, 'addEditCountry'])->name('addEditCountry');
+Route::post('/deleteCountryAction', [CountryController::class, 'deleteCountryAction'])->name('deleteCountryAction');
+Route::get('/language', [LanguageController::class, 'index'])->name('language');
+Route::post('/languageTableList', [LanguageController::class, 'languageTableList'])->name('languageTableList');
+Route::post('/addEditLanguage', [LanguageController::class, 'addEditLanguage'])->name('addEditLanguage');
+Route::post('/deleteLanguageAction', [LanguageController::class, 'deleteLanguageAction'])->name('deleteLanguageAction');
+Route::get('/religion', [ReligionController::class, 'index'])->name('religion');
+Route::post('/religionTableList', [ReligionController::class, 'religionTableList'])->name('religionTableList');
+Route::post('/addEditReligion', [ReligionController::class, 'addEditReligion'])->name('addEditReligion');
+Route::post('/deleteReligionAction', [ReligionController::class, 'deleteReligionAction'])->name('deleteReligionAction');
+Route::get('/category', [CategoryController::class, 'index'])->name('category');
+Route::post('/categoryTableList', [CategoryController::class, 'categoryTableList'])->name('categoryTableList');
+Route::post('/addEditCategory', [CategoryController::class, 'addEditCategory'])->name('addEditCategory');
+Route::post('/deleteCategoryAction', [CategoryController::class, 'deleteCategoryAction'])->name('deleteCategoryAction');
+Route::get('/question', [QuestionController::class, 'index'])->name('question');
+Route::post('/questionTableList', [QuestionController::class, 'questionTableList'])->name('questionTableList');
+Route::post('/addEditQuestion', [QuestionController::class, 'addEditQuestion'])->name('addEditQuestion');
+Route::post('/deleteQuestionAction', [QuestionController::class, 'deleteQuestionAction'])->name('deleteQuestionAction');
 Route::get('/answer', [AnswerController::class, 'index'])->name('answer');
-Route::post('/answerTableList', [AnswerController::class, 'answerTableList']);
-Route::post('/addEditAnswer', [AnswerController::class, 'addEditAnswer']);
-Route::post('/deleteAnswerAction', [AnswerController::class, 'deleteAnswerAction']);
-Route::post('/categoryDropdownFilter', [AnswerController::class, 'categoryDropdownFilter']);
+Route::post('/answerTableList', [AnswerController::class, 'answerTableList'])->name('answerTableList');
+Route::post('/addEditAnswer', [AnswerController::class, 'addEditAnswer'])->name('addEditAnswer');
+Route::post('/deleteAnswerAction', [AnswerController::class, 'deleteAnswerAction'])->name('deleteAnswerAction');
+Route::post('/categoryDropdownFilter', [AnswerController::class, 'categoryDropdownFilter'])->name('categoryDropdownFilter');
 Route::get('/changeID', [AnswerController::class, 'changeID']);
-Route::get('/information', [InformationController::class, 'index']);
-Route::post('/infoTableList', [InformationController::class, 'infoTableList']);
-Route::post('/addEditInfo', [InformationController::class, 'addEditInfo']);
-Route::post('/deleteInfoAction', [InformationController::class, 'deleteInfoAction']);
-// });
+Route::get('/information', [InformationController::class, 'index'])->name('information');
+Route::post('/infoTableList', [InformationController::class, 'infoTableList'])->name('infoTableList');
+Route::post('/addEditInfo', [InformationController::class, 'addEditInfo'])->name('addEditInfo');
+Route::post('/deleteInfoAction', [InformationController::class, 'deleteInfoAction'])->name('deleteInfoAction');
+});
 
 
 

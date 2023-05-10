@@ -139,7 +139,7 @@ if (typeof (devicesDt) != 'undefined') {
             order: [],
         "tabIndex": -1,
              "ajax": {
-                "url": "/religionTableList",
+                "url": "{{ route('religionTableList') }}",
                 "type": "POST",
                 "data": {'uc' : 1 , "_token": "{{ csrf_token() }}"},
                 failure: function (response) {
@@ -217,7 +217,7 @@ $(document).ready(function(){
     $('.btnBlock').prop('disabled', true);
     $('.spinner-border').removeClass('d-none');
      $.ajax({
-             url: "/addEditReligion",
+             url: "{{ route('addEditReligion') }}",
              type: "POST",
              data: form_data,
              cache: false,
@@ -256,7 +256,7 @@ $(document).ready(function(){
     $('.spinner-border').removeClass('d-none');
     $('.btnBlock').prop('disabled', true);
      $.ajax({
-             url: "/deleteReligionAction",
+             url: "{{ route('deleteReligionAction') }}",
              type: "POST",
              data: form_data,
              cache: false,

@@ -109,7 +109,7 @@ $(function() {
     $('.btnBlock').prop('disabled', true);
     $('.spinner-border').removeClass('d-none');
      $.ajax({
-             url: "/adminLogin",
+             url: "{{ route('adminLogin') }}",
              type: "POST",
              data: form_data,
              cache: false,
@@ -123,7 +123,7 @@ $(function() {
                     toastr.success(obj.message, 'Success',{timeOut: 5000});
                     setTimeout(function() {
                         $('.spinner-border').addClass('d-none');
-                    window.location.href = '/dashboard';
+                    window.location.href = "{{ route('dashboard') }}/";
                     }, 2000);			
                  }
                  else

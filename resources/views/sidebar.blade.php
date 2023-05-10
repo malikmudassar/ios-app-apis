@@ -3,7 +3,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{ url('/webAssets') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">SEEK</span>
     </a>
 
@@ -12,7 +12,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ url('/webAssets') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block"><?=session()->get('fname');?></a>
@@ -45,7 +45,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/country" class="nav-link <?= $nav=='country' ? 'active' : '' ?>">
+            <a href="{{ route('country') }}" class="nav-link <?= $nav=='country' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Country
@@ -53,7 +53,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/language" class="nav-link <?= $nav=='language' ? 'active' : '' ?>">
+            <a href="{{ route('language') }}" class="nav-link <?= $nav=='language' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Language
@@ -61,7 +61,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/religion" class="nav-link <?= $nav=='religion' ? 'active' : '' ?>">
+            <a href="{{ route('religion') }}" class="nav-link <?= $nav=='religion' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Religion
@@ -69,7 +69,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/category" class="nav-link <?= $nav=='category' ? 'active' : '' ?>">
+            <a href="{{ route('category') }}" class="nav-link <?= $nav=='category' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
               Profile Category
@@ -87,7 +87,7 @@
             </a>
             <ul class="nav nav-treeview" style="display: <?= ($nav=='question' || $nav=='information') ? 'block' : 'none' ?>;" >
             <li class="nav-item">
-            <a href="/question" class="nav-link <?= $nav=='question' ? 'active' : '' ?>">
+            <a href="{{ route('question') }}" class="nav-link <?= $nav=='question' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
               Questions
@@ -95,7 +95,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/information" class="nav-link <?= $nav=='information' ? 'active' : '' ?>">
+            <a href="{{ route('information') }}" class="nav-link <?= $nav=='information' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>Questions Information</p>
             </a>
@@ -114,7 +114,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="/logout" class="nav-link">
+            <a href="{{ route('logout') }}" class="nav-link">
             <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
               Logout

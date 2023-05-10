@@ -161,7 +161,7 @@ if (typeof (devicesDt) != 'undefined') {
             order: [],
         "tabIndex": -1,
              "ajax": {
-                "url": "/answerTableList",
+                "url": "{{ route('answerTableList') }}",
                 "type": "POST",
                 "data": {'uc' : 1 , "_token": "{{ csrf_token() }}"},
                 failure: function (response) {
@@ -226,7 +226,7 @@ $(document).ready(function(){
         form_data.append("_token", token);
         form_data.append("type", type);
             $.ajax({
-                url: "/categoryDropdownFilter",
+                url: "{{ route('categoryDropdownFilter') }}",
                 type: "POST",
                 data: form_data,
                 cache: false,
@@ -292,7 +292,7 @@ $(document).ready(function(){
     $('.btnBlock').prop('disabled', true);
     $('.spinner-border').removeClass('d-none');
      $.ajax({
-             url: "/addEditAnswer",
+             url: "{{ route('addEditAnswer') }}",
              type: "POST",
              data: form_data,
              cache: false,
@@ -331,7 +331,7 @@ $(document).ready(function(){
     $('.spinner-border').removeClass('d-none');
     $('.btnBlock').prop('disabled', true);
      $.ajax({
-             url: "/deleteAnswerAction",
+             url: "{{ route('deleteAnswerAction') }}",
              type: "POST",
              data: form_data,
              cache: false,
@@ -367,7 +367,7 @@ $('#category_id').on('change', function() {
     form_data.append("_token", token);
     form_data.append("type", type);
         $.ajax({
-             url: "/categoryDropdownFilter",
+             url: "{{ route('categoryDropdownFilter') }}",
              type: "POST",
              data: form_data,
              cache: false,
@@ -388,9 +388,6 @@ $('#category_id').on('change', function() {
          });  
     }
 });
-
-
-
 
 $(document).ready(function(){
     var wrapper = $(".addMoreFields"); //Fields wrapper

@@ -128,7 +128,7 @@ if (typeof (devicesDt) != 'undefined') {
  devicesDt.destroy();
  }
  devicesDt = $(".myTable").DataTable({
-  columnDefs: [{  //dataTable warning
+  columnDefs: [{  //dataTable
     "defaultContent": "-",
     "targets": "_all"
   }],
@@ -138,7 +138,7 @@ if (typeof (devicesDt) != 'undefined') {
             order: [],
         "tabIndex": -1,
              "ajax": {
-                "url": "/countryTableList",
+                "url": "{{ route('countryTableList') }}",
                 "type": "POST",
                 "data": {'uc' : 1 , "_token": "{{ csrf_token() }}"},
                 failure: function (response) {
@@ -216,7 +216,7 @@ $(document).ready(function(){
     $('.btnBlock').prop('disabled', true);
     $('.spinner-border').removeClass('d-none');
      $.ajax({
-             url: "/addEditCountry",
+             url: "{{ route('addEditCountry') }}",
              type: "POST",
              data: form_data,
              cache: false,
@@ -254,7 +254,7 @@ $(document).ready(function(){
     $('.spinner-border').removeClass('d-none');
     $('.btnBlock').prop('disabled', true);
      $.ajax({
-             url: "/deleteCountryAction",
+             url: "{{ route('deleteCountryAction') }}",
              type: "POST",
              data: form_data,
              cache: false,
