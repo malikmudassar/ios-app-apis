@@ -182,7 +182,7 @@ if (typeof (devicesDt) != 'undefined') {
     { "data": "answer_statement" },
     {
         "render": function (data, type, full, meta){
-            return "<a class='btn btn-primary btn-sm editAnswer' data-id='"+full.id+"' data-category_id='"+full.category_id+"' data-question_id='"+full.question_id+"' data-answer_statement='"+full.answer_statement+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm mt-1 deleteAnswer' data-id='"+full.id+"'><i class='fas fa-trash'></i> Delete</a>";
+            return "<a href='#' class='editAnswer' data-id='"+full.id+"' data-category_id='"+full.category_id+"' data-question_id='"+full.question_id+"' data-answer_statement='"+full.answer_statement+"'><i class='fas fa-edit text-primary' data-toggle='tooltip' data-placement='top' title='Edit'></i></a> <a href='#' class='deleteAnswer' data-id='"+full.id+"'><i class='fas fa-trash text-danger' data-toggle='tooltip' data-placement='top' title='Delete'></i></a>";
         }
     }, 
 ],
@@ -206,8 +206,9 @@ $(document).ready(function(){
         $("#category_id").val("");
         $("#question_id").val("");
         $("#answer_statement").val("");
-		$(".modal-title").text("Add Answer");
-		$('#answerModal').modal('show');
+        $(".modal-title").text("Add Answer");
+        $(".addMoreFields").html("");
+        $('#answerModal').modal('show');
 	});
     $(document).on('click','.editAnswer',function(){
 		    var id=$(this).attr("data-id");
@@ -249,6 +250,7 @@ $(document).ready(function(){
         }
     $('.add-more').addClass('d-none');
 		$(".modal-title").text("Edit Answer");
+    $(".addMoreFields").html("");
 		$('#answerModal').modal('show');
 	});
     $(document).on('click','.deleteAnswer',function(){

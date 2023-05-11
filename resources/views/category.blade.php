@@ -162,7 +162,7 @@ if (typeof (devicesDt) != 'undefined') {
     { "data": "page" },
     {
         "render": function (data, type, full, meta){
-            return "<a class='btn btn-primary btn-sm editCategory' data-id='"+full.id+"' data-category_name='"+full.category_name+"' data-page='"+full.page+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm deleteCategory' data-id='"+full.id+"'><i class='fas fa-trash'></i> Delete</a>";
+            return "<a href='#' class='editCategory' data-id='"+full.id+"' data-category_name='"+full.category_name+"' data-page='"+full.page+"'><i class='fas fa-edit text-primary' data-toggle='tooltip' data-placement='top' title='Edit'></i></a> <a href='#' class='deleteCategory' data-id='"+full.id+"'><i class='fas fa-trash text-danger' data-toggle='tooltip' data-placement='top' title='Delete'></i></a>";
         }
     }, 
 ],

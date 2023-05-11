@@ -124,7 +124,7 @@ $(function() {
                     setTimeout(function() {
                         $('.spinner-border').addClass('d-none');
                     window.location.href = "{{ route('dashboard') }}/";
-                    }, 2000);			
+                    }, 1000);			
                  }
                  else
                  {

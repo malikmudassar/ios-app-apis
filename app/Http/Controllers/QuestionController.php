@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\{Question,Category};
+use Illuminate\Support\Facades\Hash;
 class QuestionController extends Controller
 {
     public function index(Request $request)
@@ -13,7 +14,8 @@ class QuestionController extends Controller
 
     public function questionTableList()
     {
-        $query['data'] = Question::orderBy('category__questions.id','desc')
+        $query['data'] = Question::orderBy('category__questions.category_id','asc')
+        ->orderBy('category__questions.id', 'desc')
         ->select('category__questions.*', 'profile_categories.id as profile_cat_id', 'profile_categories.category_name')
         ->join('profile_categories', 'profile_categories.id', '=', 'category__questions.category_id')
         ->get();
@@ -50,7 +52,7 @@ class QuestionController extends Controller
         {
             $data->save();
             Question::where('id',$data->id)->update([
-                'enc_id' => md5($data->id),
+                'enc_id' => Hash::make($data->id),
             ]);
             if($data->save() > 0){
                 $arr = array( "sucesss"=>'200' ,'message' => 'Question successfully added');

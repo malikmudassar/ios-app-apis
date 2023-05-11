@@ -158,7 +158,7 @@ if (typeof (devicesDt) != 'undefined') {
     { "data": "religion" },
     {
         "render": function (data, type, full, meta){
-            return "<a class='btn btn-primary btn-sm editReligion' data-religion_id='"+full.religion_id+"' data-religion='"+full.religion+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm deleteReligion' data-religion_id='"+full.religion_id+"'><i class='fas fa-trash'></i> Delete</a>";
+            return "<a href='#' class='editReligion' data-religion_id='"+full.religion_id+"' data-religion='"+full.religion+"'><i class='fas fa-edit text-primary' data-toggle='tooltip' data-placement='top' title='Edit'></i></a> <a href='#' class='deleteReligion' data-religion_id='"+full.religion_id+"'><i class='fas fa-trash text-danger' data-toggle='tooltip' data-placement='top' title='Delete'></i></a>";
         }
     }, 
 ],

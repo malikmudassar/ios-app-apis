@@ -157,7 +157,7 @@ if (typeof (devicesDt) != 'undefined') {
     { "data": "country" },
     {
         "render": function (data, type, full, meta){
-            return "<a class='btn btn-primary btn-sm editCountry' data-country_id='"+full.country_id+"' data-country='"+full.country+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm deleteCountry' data-country_id='"+full.country_id+"'><i class='fas fa-trash'></i> Delete</a>";
+            return "<a href='#' class='editCountry' data-country_id='"+full.country_id+"' data-country='"+full.country+"'><i class='fas fa-edit text-primary' data-toggle='tooltip' data-placement='top' title='Edit'></i></a> <a href='#' class='deleteCountry' data-country_id='"+full.country_id+"'><i class='fas fa-trash text-danger' data-toggle='tooltip' data-placement='top' title='Delete'></i></a>";
         }
     }, 
 ],

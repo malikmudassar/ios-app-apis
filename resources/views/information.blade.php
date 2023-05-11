@@ -168,7 +168,7 @@ if (typeof (devicesDt) != 'undefined') {
     { "data": "question" },
     {
         "render": function (data, type, full, meta){
-            return "<a class='btn btn-primary btn-sm editInfo' data-info_id='"+full.info_id+"' data-info_content='"+full.info_content+"' data-question_id='"+full.question_id+"'><i class='fas fa-edit'></i> Edit</a> <a class='btn btn-danger btn-sm deleteInfo' data-info_id='"+full.info_id+"'><i class='fas fa-trash'></i> Delete</a>";
+            return "<a href='#' class='editInfo' data-info_id='"+full.info_id+"' data-info_content='"+full.info_content+"' data-question_id='"+full.question_id+"'><i class='fas fa-edit text-primary' data-toggle='tooltip' data-placement='top' title='Edit'></i></a> <a href='#' class='deleteInfo' data-info_id='"+full.info_id+"'><i class='fas fa-trash text-danger' data-toggle='tooltip' data-placement='top' title='Delete'></i></a>";
         }
     }, 
 ],

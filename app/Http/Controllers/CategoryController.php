@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Hash;
 class CategoryController extends Controller
 {
     public function index(Request $request)
@@ -40,7 +41,7 @@ class CategoryController extends Controller
         {
             $data->save();
             Category::where('id',$data->id)->update([
-                'enc_id' => md5($data->id),
+                'enc_id' => Hash::make($data->id),
             ]);
             if($data->save() > 0){
                 $arr = array( "sucesss"=>'200' ,'message' => 'Category successfully added');

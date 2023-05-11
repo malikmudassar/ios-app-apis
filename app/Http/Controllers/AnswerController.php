@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\{Answer,Question,Category};
+use Illuminate\Support\Facades\Hash;
 use DB;
 class AnswerController extends Controller
 {
@@ -14,7 +15,8 @@ class AnswerController extends Controller
 
     public function answerTableList()
     {
-        $query['data'] = Answer::orderBy('category_answers.id','desc')
+        $query['data'] = Answer::orderBy('category_answers.category_id','asc')
+        ->orderBy('category_answers.id', 'desc')
         ->select('category_answers.*', 'profile_categories.id as profile_cat_id', 'profile_categories.category_name','category__questions.id as cat_question_id','category__questions.question')
         ->join('profile_categories', 'profile_categories.id', '=', 'category_answers.category_id')
         ->join('category__questions', 'category__questions.id', '=', 'category_answers.question_id')
@@ -52,7 +54,7 @@ class AnswerController extends Controller
                     'answer_statement' => $answer_statement,
                 ]);
                 Answer::where('id',$data->id)->update([
-                    'enc_id' => md5($data->id),
+                    'enc_id' => Hash::make($data->id),
                 ]);
             }
             if($data)

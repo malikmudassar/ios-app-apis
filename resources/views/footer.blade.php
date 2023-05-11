@@ -1,9 +1,9 @@
 <!-- /.content-wrapper -->
 <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
+      <b>Version</b> 1.2.0
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2023-2025 <a href="{{ route('dashboard') }}">SEEK</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -12,7 +12,6 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -27,7 +26,6 @@
 <script src="{{ url('/webAssets') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{ url('/webAssets') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="{{ url('/webAssets') }}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-
 <!-- AdminLTE App -->
 <script src="{{ url('/webAssets') }}/dist/js/adminlte.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
