@@ -105,7 +105,8 @@
               </button>
             </div>
             <div class="modal-body">
-            <strong>Are you sure to delete this record?</strong>
+            <div><strong>Are you sure to delete this record?</strong></div>
+            <div><span>It'll also delete its chield data e.g. questions , information & answers .</span></div>
            <input type="hidden" name="id" id="id">
             </div>
             <div class="modal-footer justify-content-between">

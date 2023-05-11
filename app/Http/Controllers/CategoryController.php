@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\{Category,Question,Information,Answer};
 use Illuminate\Support\Facades\Hash;
 class CategoryController extends Controller
 {
@@ -56,6 +56,10 @@ class CategoryController extends Controller
 
         public function deleteCategoryAction(Request $request)
         {
+        $questionIDs=Question::where('category_id',$request->input('id'))->select('id')->get();
+        Answer::whereIn('question_id',$questionIDs)->delete();
+        Information::whereIn('question_id',$questionIDs)->delete();
+        Question::where('category_id',$request->input('id'))->delete();
         $query=Category::where('id',$request->input('id'))->delete();
         if($query)
         {

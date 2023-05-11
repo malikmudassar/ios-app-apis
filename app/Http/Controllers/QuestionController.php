@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\{Question,Category};
+use App\Models\{Question,Category,Information,Answer};
 use Illuminate\Support\Facades\Hash;
 class QuestionController extends Controller
 {
@@ -67,6 +67,8 @@ class QuestionController extends Controller
 
         public function deleteQuestionAction(Request $request)
         {
+        Answer::where('question_id',$request->input('id'))->delete();
+        Information::where('question_id',$request->input('id'))->delete();
         $query=Question::where('id',$request->input('id'))->delete();
         if($query)
         {

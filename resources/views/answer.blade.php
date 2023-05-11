@@ -208,6 +208,7 @@ $(document).ready(function(){
         $("#answer_statement").val("");
         $(".modal-title").text("Add Answer");
         $(".addMoreFields").html("");
+        $(".add-more").removeClass("d-none");
         $('#answerModal').modal('show');
 	});
     $(document).on('click','.editAnswer',function(){

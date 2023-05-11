@@ -1,5 +1,19 @@
 @include('header')
-@include('sidebar')  
+@include('sidebar') 
+<style>
+  .content .more {
+  display: none;
+}
+
+.content .dots,
+.content .read-more {
+  display: inline;
+}
+
+.content.show-less .more {
+  display: inline;
+}
+</style> 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -164,7 +178,22 @@ if (typeof (devicesDt) != 'undefined') {
             return meta.row + meta.settings._iDisplayStart + 1;
         }
     },
-    { "data": "info_content" },
+    {
+  "data": "info_content",
+  "render": function(data, type, full, meta) {
+    if (type === "display") {
+      if (data.length > 50) {
+        return '<div class="content">' + data.substr(0, 50) +
+          '<span class="dots">...</span>' +
+          '<span class="more">' + data.substr(50) + '</span>' +
+          '<a href="#" class="readMore read-more">Read more</a></div>';
+      } else {
+        return data;
+      }
+    }
+    return data;
+  }
+},
     { "data": "question" },
     {
         "render": function (data, type, full, meta){
@@ -299,4 +328,22 @@ $(document).ready(function(){
              }
          });
         });
+
+        $(document).on('click', '.read-more', function(e) {
+          e.preventDefault();
+          $(this).closest('.content').addClass('show-less');
+          $(this).closest('.content').find('.dots').hide();
+          $(this).closest('.readMore').addClass('show-less');
+          $(this).closest('.readMore').removeClass('read-more');
+          $(this).closest('.readMore').text('Show-less');
+        });
+        $(document).on('click', '.show-less', function(e) {
+          e.preventDefault();
+          $(this).closest('.content').removeClass('show-less');
+          $(this).closest('.content').find('.dots').show();
+          $(this).closest('.readMore').removeClass('show-less');
+          $(this).closest('.readMore').addClass('read-more');
+          $(this).closest('.readMore').text('Read-more');
+        });
+
 </script>

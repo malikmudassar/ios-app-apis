@@ -229,14 +229,14 @@ $(document).ready(function(){
                     $('#countryModal').modal('hide');
                     $('#country-form').trigger("reset");
                     toastr.success(obj.message, 'Success',{timeOut: 5000});
-                    getData();				
+                    getData();			
                  }
                  else
                  {
                     toastr.success(obj.message, 'Error',{timeOut: 5000});
                  } 
-                   $('.btnBlock').prop('disabled', false);
-                   $('.spinner-border').addClass('d-none');
+                $('.btnBlock').prop('disabled', false);
+                $('.spinner-border').addClass('d-none');
              }
          });
         }
