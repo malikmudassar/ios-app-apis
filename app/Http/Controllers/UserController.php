@@ -292,8 +292,34 @@ private function isAnswerMatched($logedinQuestions, $questionID, $answerID)
     return 0;
 }
 
+public function usersList()
+{
+    $data['nav'] = 'users';
+    return view('users',$data);
+}
 
+public function usersTableList()
+{
+    $query['data'] = User::orderBy('id','desc')->where('admin_type',null)->get();
+    return response()->json(['data' => $query['data']]);
+}
 
+public function editUser(Request $request)
+{  
+    $update = User::where('id',$request->input('id'))->update([
+        'subsc_package' => $request->input('subsc_package'),
+    ]);
+    if($update)
+    {
+        $arr = array("sucesss"=>'200' ,'message' => 'Subscription package successfully updated');
+    }
+    else
+    {
+        $arr = array( "sucesss"=>'400' ,'message' => 'Opps error');
+    }
+
+    return json_encode($arr);     
+}
 
 
 }

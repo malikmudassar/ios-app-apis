@@ -40,6 +40,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'state',
         'userQA',
+        'admin_type'
         
     ];
 

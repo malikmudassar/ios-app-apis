@@ -113,6 +113,15 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{ route('users') }}" class="nav-link <?= $nav=='users' ? 'active' : '' ?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+              Users
+              </p>
+            </a>
+          </li>
+
 
         </ul>
       </nav>

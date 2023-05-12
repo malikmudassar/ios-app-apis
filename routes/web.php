@@ -9,6 +9,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,6 +57,9 @@ Route::get('/information', [InformationController::class, 'index'])->name('infor
 Route::post('/infoTableList', [InformationController::class, 'infoTableList'])->name('infoTableList');
 Route::post('/addEditInfo', [InformationController::class, 'addEditInfo'])->name('addEditInfo');
 Route::post('/deleteInfoAction', [InformationController::class, 'deleteInfoAction'])->name('deleteInfoAction');
+Route::get('/users', [UserController::class, 'usersList'])->name('users');
+Route::post('/usersTableList', [UserController::class, 'usersTableList'])->name('usersTableList');
+Route::post('/editUser', [UserController::class, 'editUser'])->name('editUser');
 });
 
 
