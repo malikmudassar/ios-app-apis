@@ -29,6 +29,7 @@ Route::middleware(['tokenAuth'])->group(function () {
     Route::post('/userProfileImage', [UserController::class, 'userProfileImage']);
     Route::post('/userQA', [UserController::class, 'userQA']);
     Route::get('/getUserData', [UserController::class, 'getUserData']);
+    Route::post('/getOtherUserData', [UserController::class, 'getOtherUserData']);
     Route::post('/getSpotsWithinRadius', [SpotController::class, 'getSpotsWithinRadius']);
 });
 

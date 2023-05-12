@@ -158,6 +158,8 @@ public function getUserData()
        {
             $questions = json_decode($val->userQA, true);
             $question_answers = [];
+            if(isset($questions))
+            {
             foreach ($questions as $question) {
                 $questionID = $question['questionID'];
                 $selectedOptionsID = $question['selectedOptionsID'];
@@ -171,6 +173,7 @@ public function getUserData()
                     'answer_statement' => $answer_statement
                 ];
             }
+          }
                 $dataArray[] = array(
                     "id"=>$val->id,
                     "fname"=>$val->fname,
@@ -215,6 +218,82 @@ public function getUserData()
           }
           return response()->json($data,$status);
 }
+
+public function getOtherUserData(Request $request)
+{
+    $logedinUserData = User::where('id', Auth::id())->get();
+    foreach ($logedinUserData as $row) {
+        $logedinQuestions = json_decode($row->userQA, true);
+    }
+
+    $userData = User::where('id', $request->user_id)->get();
+    $dataArray = [];
+    foreach ($userData as $val) {
+        $questions = json_decode($val->userQA, true);
+        $question_answers = [];
+        $matchedCount = 0;
+        if (isset($questions)) {
+            foreach ($questions as $question) {
+                $questionID = $question['questionID'];
+                $selectedOptionsID = $question['selectedOptionsID'];
+                $question_statement = Category_Question::where('id', $questionID)->get();
+                $answer_statement = [];
+                foreach ($selectedOptionsID as $option_id) {
+                    $answer = CategoryAnswer::where('id', $option_id)->first();
+                    if ($answer) {
+                        $answer->is_matched = $this->isAnswerMatched($logedinQuestions, $questionID, $answer->id);
+                        // $answer->is_tested = 'testing'; //add new indexes same like this.
+                        $answer_statement[] = $answer;
+                        $matchedCount += $answer->is_matched;
+                    }
+                }
+                $question_answers[] = [
+                    'question_statement' => $question_statement,
+                    'answer_statement' => $answer_statement
+                ];
+            }
+        }
+        $val->total_matched = $matchedCount;
+        $val->preferences = $question_answers;
+        $dataArray[] = $val;
+    }
+
+    if(!empty($dataArray))
+          {
+          $status = 200;
+          $data = array(
+            'success' => true,
+            'message' => 'Other user data',
+            'data' => $dataArray,
+          );
+          }
+          else
+          {
+          $status = 500;
+          $data = array(
+            'success' => false,
+            'message' => 'Something went wrong',
+            'data' => [],
+          );
+          }
+          return response()->json($data,$status);
+}
+
+private function isAnswerMatched($logedinQuestions, $questionID, $answerID)
+{
+    foreach ($logedinQuestions as $logedinQuestion) {
+        if ($logedinQuestion['questionID'] == $questionID) {
+            $selectedOptionsID = $logedinQuestion['selectedOptionsID'];
+            if (in_array($answerID, $selectedOptionsID)) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+
+
 
 
 }

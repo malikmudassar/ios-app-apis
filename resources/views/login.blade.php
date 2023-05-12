@@ -58,13 +58,11 @@
         </div>
       </form>
 
-      
-
       <p class="mb-1">
-        <a href="forgot-password.html">forgot password</a>
+        <a href="#">forgot password</a>
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="#" class="text-center">Register a new membership</a>
       </p>
     </div>
     <!-- /.login-card-body -->
