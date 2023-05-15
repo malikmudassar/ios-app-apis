@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpotController;
 use App\Http\Controllers\SystemProfileController;
+use App\Http\Controllers\AvailabilitiesTimeSlotsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,10 @@ Route::middleware(['tokenAuth'])->group(function () {
     Route::get('/getUserData', [UserController::class, 'getUserData']);
     Route::post('/getOtherUserData', [UserController::class, 'getOtherUserData']);
     Route::post('/getSpotsWithinRadius', [SpotController::class, 'getSpotsWithinRadius']);
+    Route::post('/spotsAvailabilities', [AvailabilitiesTimeSlotsController::class, 'spotsAvailabilities']);
+    Route::get('/checkAvailability', [AvailabilitiesTimeSlotsController::class, 'checkAvailability']);
 });
 
 // public apis
 Route::get('/getProfileData', [SystemProfileController::class, 'getProfileData']);
+Route::get('/getAvailabilitiesTimeSlots', [AvailabilitiesTimeSlotsController::class, 'getAvailabilitiesTimeSlots']);

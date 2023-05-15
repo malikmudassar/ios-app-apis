@@ -78,7 +78,7 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary btnBlock editUserAction">
               <span class="btn-text">Save changes</span>
-              <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              <span class="spinner-border spinner-border-sm d-none spinner-rotation" role="status" aria-hidden="true"></span>
               </button>
             </div>
             </form>
@@ -149,7 +149,7 @@ dom: 'B<f<t>lip>',
 language: {
             search: "_INPUT_",
             searchPlaceholder: "Search",
-            //"loadingRecords": "<span class='spinner-border spinner-border-lg text-primary' role='status' aria-hidden='true'></span>"
+            "loadingRecords": "<span class='spinner-border spinner-border-lg text-primary' role='status' aria-hidden='true'></span>"
         }, 
 });
 }
@@ -177,7 +177,7 @@ $(document).ready(function(){
     form_data.append("_token", token);
     form_data.append("type", type);
     $('.btnBlock').prop('disabled', true);
-    $('.spinner-border').removeClass('d-none');
+    $('.spinner-rotation').removeClass('d-none');
      $.ajax({
              url: "{{ route('editUser') }}",
              type: "POST",
@@ -199,11 +199,9 @@ $(document).ready(function(){
                     toastr.success(obj.message, 'Error',{timeOut: 5000});
                  } 
                 $('.btnBlock').prop('disabled', false);
-                $('.spinner-border').addClass('d-none');
+                $('.spinner-rotation').addClass('d-none');
              }
          });
         
     });
-
-   
 </script>

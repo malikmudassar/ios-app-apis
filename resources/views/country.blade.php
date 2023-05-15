@@ -77,7 +77,7 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary btnBlock">
               <span class="btn-text">Save changes</span>
-              <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              <span class="spinner-border spinner-border-sm d-none spinner-rotation" role="status" aria-hidden="true"></span>
               </button>
             </div>
             </form>
@@ -106,7 +106,7 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary btnBlock deleteCountryAction">
               <span class="btn-text">Delete</span>
-              <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              <span class="spinner-border spinner-border-sm d-none spinner-rotation" role="status" aria-hidden="true"></span>
               </button>
             </div>
           </div>
@@ -169,7 +169,8 @@ dom: 'B<f<t>lip>',
    ],
 language: {
             search: "_INPUT_",
-            searchPlaceholder: "Search"
+            searchPlaceholder: "Search",
+            "loadingRecords": "<span class='spinner-border spinner-border-lg text-primary' role='status' aria-hidden='true'></span>"
         }, 
 });
 }
@@ -214,7 +215,7 @@ $(document).ready(function(){
     form_data.append("_token", token);
     form_data.append("type", type);
     $('.btnBlock').prop('disabled', true);
-    $('.spinner-border').removeClass('d-none');
+    $('.spinner-rotation').removeClass('d-none');
      $.ajax({
              url: "{{ route('addEditCountry') }}",
              type: "POST",
@@ -236,7 +237,7 @@ $(document).ready(function(){
                     toastr.success(obj.message, 'Error',{timeOut: 5000});
                  } 
                 $('.btnBlock').prop('disabled', false);
-                $('.spinner-border').addClass('d-none');
+                $('.spinner-rotation').addClass('d-none');
              }
          });
         }
@@ -251,7 +252,7 @@ $(document).ready(function(){
     form_data.append("country_id", country_id);
     form_data.append("_token", token);
     form_data.append("type", type);
-    $('.spinner-border').removeClass('d-none');
+    $('.spinner-rotation').removeClass('d-none');
     $('.btnBlock').prop('disabled', true);
      $.ajax({
              url: "{{ route('deleteCountryAction') }}",
@@ -272,7 +273,7 @@ $(document).ready(function(){
                  {
                     toastr.success(obj.message, 'Error',{timeOut: 5000});
                  } 
-                  $('.spinner-border').addClass('d-none');
+                  $('.spinner-rotation').addClass('d-none');
                   $('.btnBlock').prop('disabled', false);
              }
          });
