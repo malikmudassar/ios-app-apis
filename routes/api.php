@@ -34,6 +34,7 @@ Route::middleware(['tokenAuth'])->group(function () {
     Route::post('/getSpotsWithinRadius', [SpotController::class, 'getSpotsWithinRadius']);
     Route::post('/spotsAvailabilities', [AvailabilitiesTimeSlotsController::class, 'spotsAvailabilities']);
     Route::get('/checkAvailability', [AvailabilitiesTimeSlotsController::class, 'checkAvailability']);
+    Route::post('/userVerification', [UserController::class, 'userVerification']);
 });
 
 // public apis

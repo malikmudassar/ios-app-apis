@@ -1,9 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\{User,Category_Question,CategoryAnswer};
+use App\Models\{User,Category_Question,CategoryAnswer,Verification};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 class UserController extends Controller
 {
     public function userProfile(Request $request)
@@ -312,6 +313,115 @@ public function editUser(Request $request)
     if($update)
     {
         $arr = array("sucesss"=>'200' ,'message' => 'Subscription package successfully updated');
+    }
+    else
+    {
+        $arr = array( "sucesss"=>'400' ,'message' => 'Opps error');
+    }
+
+    return json_encode($arr);     
+}
+
+public function userVerification(Request $request)
+{
+       $validator = Validator::make($request->all(), 
+        [
+            'method' => 'required',
+            'image' => 'required'
+        ],
+        [
+          'method.required'  => 'Please enter method',
+          'image.required'  => 'Please upload photo',
+        ]);
+        if ($validator->fails()) 
+        {
+    		return response()->json(["validateErrorList" => $validator->messages()],422);
+        }
+        else
+        {
+            $data = new Verification;
+            if (@$_FILES['image']['name']) {
+                $temp = explode('.', $_FILES['image']['name']);
+                $extension = end($temp);
+                $path = '../public/apiAssets/userVerifactions/';
+                $filename = basename($_FILES['image']['name']); 
+                $filename = time() . "." . $extension;
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $path . $filename)) {
+                    $image=$filename;
+                } else {
+                     $image='error';
+                }
+                }else{
+                $image='error';
+                }
+                $savePath = url('/').'/apiAssets/userVerifactions/'.$image;
+                $data->image = $savePath;
+                $data->method = $request->input('method');
+                $data->user_id = Auth::id();
+                $data->save();
+                if($data->save())
+                {
+                $status = 200;
+                $data = array(
+                    'success' => true,
+                    'message' => 'User verification request sent',
+                );
+                }
+                else
+                {
+                $status = 500;
+                $data = array(
+                    'success' => false,
+                    'message' => 'Something went wrong',
+                );
+                }
+    }
+    	   return response()->json($data,$status); 
+
+}
+
+public function userVerificationList()
+{
+    $data['nav'] = 'user_verification';
+    return view('user_verification',$data);
+}
+
+public function usersVerificationTableList()
+{
+    $query['data'] = Verification::join('users', 'users.id', '=', 'user_verification.user_id')->orderBy('user_verification.id','desc')->get();
+    return response()->json(['data' => $query['data']]);
+}
+
+public function isverified(Request $request)
+{  
+    $status = $request->input('status');
+    $user_id = $request->input('user_id');
+    if($status=='true')
+    {
+        $session = session();
+        $update = Verification::where('user_id',$request->input('user_id'))->update([
+            'verified_at' => Carbon::now(),
+            'verified_by' => $session->get('id'),
+        ]);
+        $update = User::where('id',$request->input('user_id'))->update([
+            'is_verified' => 1,
+        ]);
+        $msg = 'User verified successfully';
+    }
+    else
+    {
+        $update = Verification::where('user_id',$request->input('user_id'))->update([
+            'verified_at' => null,
+            'verified_by' => null,
+        ]);
+        $update = User::where('id',$request->input('user_id'))->update([
+            'is_verified' => 0,
+        ]);
+        $msg = 'User unverified again';
+    }
+    if($update)
+    {
+        $arr = array("sucesss"=>'200' ,'message' => $msg);
     }
     else
     {

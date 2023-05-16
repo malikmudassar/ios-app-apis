@@ -60,6 +60,9 @@ Route::post('/deleteInfoAction', [InformationController::class, 'deleteInfoActio
 Route::get('/users', [UserController::class, 'usersList'])->name('users');
 Route::post('/usersTableList', [UserController::class, 'usersTableList'])->name('usersTableList');
 Route::post('/editUser', [UserController::class, 'editUser'])->name('editUser');
+Route::get('/user-verification', [UserController::class, 'userVerificationList'])->name('user-verification');
+Route::post('/usersVerificationTableList', [UserController::class, 'usersVerificationTableList'])->name('usersVerificationTableList');
+Route::post('/isverified', [UserController::class, 'isverified'])->name('isverified');
 });
 
 

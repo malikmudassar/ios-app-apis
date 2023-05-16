@@ -113,7 +113,16 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item <?= ($nav=='users' || $nav=='user_verification') ? 'menu-is-opening menu-open' : '' ?>">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+              Users
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: <?= ($nav=='users' || $nav=='user_verification') ? 'block' : 'none' ?>;" >
+            <li class="nav-item">
             <a href="{{ route('users') }}" class="nav-link <?= $nav=='users' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-table"></i>
               <p>
@@ -121,6 +130,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('user-verification') }}" class="nav-link <?= $nav=='user_verification' ? 'active' : '' ?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>User Verification</p>
+            </a>
+          </li> 
+        </ul>
+      </li>
 
 
         </ul>
