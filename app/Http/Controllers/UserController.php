@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\{User,Category_Question,CategoryAnswer,Verification};
+use App\Models\{User,Category_Question,CategoryAnswer,Verification,Country};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use App\Services\FCMService;
+use DB;
 class UserController extends Controller
 {
     public function userProfile(Request $request)
@@ -16,7 +18,8 @@ class UserController extends Controller
             'birth_month' => 'required',
             'birth_day' => 'required',
             'height' => 'required',
-            'gender' => 'required'
+            'gender' => 'required',
+            'country' => 'required'
         ],
         [
           'fname.required'  => 'Please enter first name',
@@ -25,6 +28,7 @@ class UserController extends Controller
           'birth_day.required'  => 'Please enter birth day',
           'height.required'  => 'Please enter height',
           'gender.required'  => 'Please enter gender',
+          'country.required'  => 'Please select country',
         ]);
         if ($validator->fails()) 
         {
@@ -39,6 +43,7 @@ class UserController extends Controller
             'birth_day' => $request->birth_day,
             'height' => $request->height,
             'gender' => $request->gender,
+            'country_id' => $request->country,
         ]);
         if($query)
         {
@@ -196,6 +201,7 @@ public function getUserData()
                     "gender"=>$val->gender,
                     "profile_path"=>$val->profile_path,
                     "state"=>$val->state,
+                    "country"=>$this->getUserCountries($val->country_id),
                     "preferences"=>$question_answers,
                 );  
         }
@@ -431,6 +437,127 @@ public function isverified(Request $request)
     return json_encode($arr);     
 }
 
+
+public function testNotification(Request $request)
+{
+    $user = User::findOrFail(Auth::id());
+    FCMService::send(
+        $user->device_id,
+        [
+            'title' => $request->title,
+            'body' => $request->body,
+        ]
+    );
+    return response()->json([
+        'message' => 'Notification sent successfully',
+    ]);
+}
+
+public function getUserCountries($country_ids)
+{
+    $array = explode(',', $country_ids);
+    $countries = Country::whereIn('country_id',$array)->get();
+    return $countries;
+}
+
+public function searchFilter(Request $request)
+{
+    $age = $request->age;
+    $country = $request->country;
+    $height = $request->height;
+    $occupation = $request->occupation;
+    $lat_lng_from = $request->lat_lng_from;
+    $lat_lng_to = $request->lat_lng_to;
+    //query
+    $query = "SELECT * FROM users WHERE";
+    //age search
+    if (isset($age) && strpos($age, ',') !== false) 
+    {
+        $ageArray = explode(',', $age);
+        $query .= " age BETWEEN $ageArray[0] AND $ageArray[1]";
+    }
+    else
+    {
+        $query .= " age LIKE '%".$age."%'"; 
+    }
+    //height search
+    if (isset($height) && strpos($height, ',') !== false) 
+    {
+        $heightArray = explode(',', $height);
+        $query .= " AND height BETWEEN $heightArray[0] AND $heightArray[1]";
+    }
+    else
+    {
+        $query .= " AND height LIKE '%".$height."%'";
+    }
+    //occupation search
+    if(isset($occupation))
+    {
+        $occupationArray = explode(',', $occupation);
+        $occupationList = "'" . implode("', '", $occupationArray) . "'";
+        $query .= " AND occupation IN ($occupationList)";
+    }
+    //country search
+    if(isset($country))
+    {
+        $query .= " AND country_id IN (".$country.")";
+    }
+    //lat lng search
+    if(isset($lat_lng_from) && isset($lat_lng_to))
+    {
+        $latFrom = explode(',', $lat_lng_from)[0];
+        $lngFrom = explode(',', $lat_lng_from)[1];
+        $latTo = explode(',', $lat_lng_to)[0];
+        $lngTo = explode(',', $lat_lng_to)[1];
+        $query .= " AND lat BETWEEN $latFrom AND $latTo
+        AND lng BETWEEN $lngFrom AND $lngTo";
+    }
+    $query .= " AND id !='".Auth::id()."' ORDER BY id DESC";
+    // echo "query :".$query;die();
+    $dataArr = DB::select($query);
+    if(!empty($dataArr))
+    {
+        foreach($dataArr as $val)
+        {
+        $dataArray[] = array(
+            "id"=>$val->id,
+            "fname"=>$val->fname,
+            "lng"=>$val->lng,
+            "gender"=>$val->gender,
+            "height"=>$val->height,
+            "occupation"=>$val->occupation,
+            "profile_path"=>$val->profile_path,
+            "age"=>$val->age,
+            "lat"=>$val->lat,
+            "country"=>$this->getUserCountries($val->country_id),
+        ); 
+    }
+    }
+    else
+    {
+        $dataArray = []; 
+    }
+        if(!empty($dataArray))
+          {
+          $status = 200;
+          $data = array(
+            'success' => true,
+            'resultsCount' => count($dataArray),
+            'message' => 'Search results',
+            'data' => $dataArray,
+          );
+          }
+          else
+          {
+          $status = 500;
+          $data = array(
+            'success' => false,
+            'message' => 'No data available',
+            'data' => [],
+          );
+          }
+          return response()->json($data,$status);
+    }
 
 }
 ?>

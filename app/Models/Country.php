@@ -12,5 +12,10 @@ class Country extends Model
         'country_id',
         'country',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'country_id',
+    ];
 }
 ?>

@@ -35,6 +35,8 @@ Route::middleware(['tokenAuth'])->group(function () {
     Route::post('/spotsAvailabilities', [AvailabilitiesTimeSlotsController::class, 'spotsAvailabilities']);
     Route::get('/checkAvailability', [AvailabilitiesTimeSlotsController::class, 'checkAvailability']);
     Route::post('/userVerification', [UserController::class, 'userVerification']);
+    Route::post('/testNotification', [UserController::class, 'testNotification']);
+    Route::post('/searchFilter', [UserController::class, 'searchFilter']);
 });
 
 // public apis
