@@ -512,7 +512,7 @@ public function searchFilter(Request $request)
         $query .= " AND lat BETWEEN $latFrom AND $latTo
         AND lng BETWEEN $lngFrom AND $lngTo";
     }
-    $query .= " AND id !='".Auth::id()."' ORDER BY id DESC";
+    $query .= " AND id !='".Auth::id()."' AND is_verified=1 ORDER BY created_at DESC";
     // echo "query :".$query;die();
     $dataArr = DB::select($query);
     if(!empty($dataArr))
