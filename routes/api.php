@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpotController;
 use App\Http\Controllers\SystemProfileController;
 use App\Http\Controllers\AvailabilitiesTimeSlotsController;
+use App\Http\Controllers\InvitesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,9 @@ Route::middleware(['tokenAuth'])->group(function () {
     Route::post('/userVerification', [UserController::class, 'userVerification']);
     Route::post('/testNotification', [UserController::class, 'testNotification']);
     Route::post('/searchFilter', [UserController::class, 'searchFilter']);
+    Route::post('/sendInvites', [InvitesController::class, 'sendInvites']);
+    Route::get('/getInvites', [InvitesController::class, 'getInvites']);
+    Route::get('/acceptInvite/{invite_id}', [InvitesController::class, 'acceptInvite']);
 });
 
 // public apis

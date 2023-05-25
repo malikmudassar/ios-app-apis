@@ -15,4 +15,9 @@ class Spot extends Model
         'latitude',
         'longitude',
     ];
+
+    public function invites()
+    {
+        return $this->hasMany(Invites::class, 'spot_id');
+    }
 }

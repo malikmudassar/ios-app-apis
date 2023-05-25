@@ -83,5 +83,10 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function invites()
+    {
+        return $this->hasMany(Invites::class, 'from_user');
+    }
+
 }
 ?>
